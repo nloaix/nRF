@@ -93,8 +93,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend, upSend,SureButton,restcmdButton,quercmdbutton,oldcmdButton,deoldcmdButton;
-    private TextView PackTotal,pakenumber;
+    private Button btnConnectDisconnect, btnSend, upSend,selectFile;
+    private TextView PackTotal,pakenumber,fileName;
     //private EditText edtMessage;
 
     /**
@@ -147,8 +147,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
 
+    // 读取SD卡中的文件
     public String readFileSdcardFile(String fileName){
         String res="";
+        Log.d(TAG,"选择SD卡中的文件");
         try{
             FileInputStream fin = new FileInputStream(fileName);
 
@@ -168,6 +170,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
         return res;
     }
+
+
 
 
     public static String bytes2HexString(byte[] array) {
@@ -199,9 +203,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         public void handleMessage(Message msg) {
 
             try{
-
                 if(blepakgIndex==0x00){
-
                     send128Buffer[0] = 0x01;
                     send128Buffer[1] = (byte)(sendpackg+1) ;
                     send128Buffer[2] = (byte)(~(sendpackg+1)) ;
@@ -226,12 +228,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         }
 
                         blepakgIndex = 0x00;
-
                         pakenumber.setText("已发包:"+sendpackg);
                         if(sendpackg==(binLenth/128))
                         {
+                            Log.d(TAG,"此时的sendpackg=="+sendpackg);
+                            Log.d(TAG,"此时的binLength=="+binLenth);
+                            String message = "04";
                             byte [] blbuf = {0x04};
                             mService.writeRXCharacteristic (blbuf);
+                            String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
+                            listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
+                            messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                             timer.cancel();
                             upSend.setEnabled(true);
                         }
@@ -284,13 +291,21 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         upSend = (Button) findViewById (R.id.upButton);
         PackTotal  = (TextView) findViewById(R.id.PackLabel);
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
-        SureButton = (Button) findViewById(R.id.sureButton);
-        restcmdButton = (Button) findViewById(R.id.restButton);
-        quercmdbutton = (Button) findViewById(R.id.querButton3);
-        oldcmdButton = (Button) findViewById(R.id.oldButton3);
-        deoldcmdButton = (Button) findViewById(R.id.deolde);
-        // edtMessage = (EditText) findViewById(R.id.sendText);
+        selectFile = (Button) findViewById(R.id.select_file);
+        fileName = (TextView) findViewById(R.id.file_name);
         service_init();
+
+
+        // OnClick select a file
+        selectFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");   // 选择任意类型
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intent,1);
+            }
+        });
 
 
 
@@ -363,180 +378,20 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     // TODO Auto-generated catch block
                     //e.printStackTrace();
                 }
-                SureButton.setEnabled(true);
-
-            }
-        });
-        // Handler Send button
-        restcmdButton.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-
-                //EditText editText = (EditText) findViewById(R.id.sendText);
-
-                String message = "复位命令";
-
-                byte[] value = {(byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x82, 0x01, 0x01,(byte) 0xfb};
-
-                Log.e (TAG, "onClick: send like bool");
-                try
-                {
-                    //send data to service
-                    mService.writeRXCharacteristic (value);
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    //e.printStackTrace();
-                }
-
-            }
-        });
-
-        // Handler Send button
-        oldcmdButton.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-
-                //EditText editText = (EditText) findViewById(R.id.sendText);
-
-                String message = "老化命令";
-
-                byte[] value = {(byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0xF1, 0x01, 0x01,(byte) 0x8C};
-
-                Log.e (TAG, "onClick: send like bool");
-                try
-                {
-                    //send data to service
-                    mService.writeRXCharacteristic (value);
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    //e.printStackTrace();
-                }
-
-            }
-        });
- // Handler deold button
-        deoldcmdButton.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-
-                //EditText editText = (EditText) findViewById(R.id.sendText);
-
-                String message = "去老化命令";
-
-                byte[] value = {(byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0xF1, 0x01, 0x00,(byte) 0x8D};
-
-                Log.e (TAG, "onClick: send like bool");
-                try
-                {
-                    //send data to service
-                    mService.writeRXCharacteristic (value);
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    //e.printStackTrace();
-                }
-
-            }
-        });
-
-        // Handler Send button
-        quercmdbutton.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-
-                //EditText editText = (EditText) findViewById(R.id.sendText);
-
-                String message = "查询命令 ";
-
-                byte[] value = {(byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x01, 0x04, 0x00,0x00,0x00,0x00,(byte) 0x7A};
-
-                Log.e (TAG, "onClick: send like bool");
-                try
-                {
-                    //send data to service
-                    mService.writeRXCharacteristic (value);
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message+mDevice.getAddress());
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    //e.printStackTrace();
-                }
-
-            }
-        });
-        // Handler Send button
-        SureButton.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-            public void onClick (View v)
-            {
-                String message = "确认 1";
-
-                byte[] value = {0x31};
-
-                try
-                {
-                    mService.writeRXCharacteristic (value);
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
-                }
-                catch (Exception e)
-                {
-                    // TODO Auto-generated catch block
-                    //e.printStackTrace();
-                }
+//                SureButton.setEnabled(true);
 
             }
         });
 
         // Set initial UI state
-        // Handler Send button发送按钮线程
+        // Handler Send button发送按钮线程 开始按钮
         upSend.setOnClickListener (new View.OnClickListener()
         {
             @Override
            public void onClick (View v)
             {
+                String message = "开始命令";
+
                 upSend.setEnabled(false);
 
                 task = new TimerTask() {
@@ -550,6 +405,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 };
 
                 try{
+
+                    //Update the log with time stamp
+                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
+                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
+                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
+
                     FileInputStream fin = new FileInputStream("/sdcard/OTA/G36_ME32F031C8T6_APP_20211112A.bin");
                     Log.i(TAG,"寻找到bin文件");
 
@@ -583,7 +444,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                     fin.close();
                 }
-                catch(Exception e){
+               catch(Exception e){
                     e.printStackTrace();
                 }
             }
@@ -591,8 +452,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     //UART service connected/disconnected
-    private ServiceConnection mServiceConnection = new ServiceConnection()
-    {
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
         public void onServiceConnected (ComponentName className, IBinder rawBinder)
         {
             mService = ( (UartService.LocalBinder) rawBinder).getService();
@@ -602,7 +462,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 Log.e (TAG, "Unable to initialize Bluetooth");
                 finish();
             }
-
         }
 
         public void onServiceDisconnected (ComponentName classname)
@@ -612,8 +471,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     };
 
-    private Handler mHandler = new Handler()
-    {
+    private Handler mHandler = new Handler() {
         @Override
 
         //Handler events that received from UART service
@@ -644,11 +502,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         //  edtMessage.setEnabled(true);
                         btnSend.setEnabled (true);
                         upSend.setEnabled(true);
-                        SureButton.setEnabled(true);
-                        restcmdButton.setEnabled(true);
-                        oldcmdButton.setEnabled(true);
-                        quercmdbutton.setEnabled(true);
-                        deoldcmdButton.setEnabled(true);
+//                        SureButton.setEnabled(true);
                         ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - ready");
                         listAdapter.add ("[" + currentDateTimeString + "] Connected to: " + mDevice.getName() );
                         messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
@@ -670,11 +524,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         // edtMessage.setEnabled(false);
                         btnSend.setEnabled (false);
                         upSend.setEnabled(false);
-                        SureButton.setEnabled(false);
-                        restcmdButton.setEnabled(false);
-                        quercmdbutton.setEnabled(false);
-                        oldcmdButton.setEnabled(false);
-                        deoldcmdButton.setEnabled(false);
+//                        SureButton.setEnabled(false);
                         ( (TextView) findViewById (R.id.deviceName) ).setText ("Not Connected");
                         listAdapter.add ("[" + currentDateTimeString + "] Disconnected to: " + mDevice.getName() );
                         mState = UART_PROFILE_DISCONNECTED;
@@ -706,10 +556,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                             if(packSendFlag==true){
 
-                                if(rxValue[0]==0x06){
+                                if(rxValue[0]==0x06 || rxValue[0] == 0x04){
                                     packSendFlag=false;
                                      text = "PACK:OK "+String.valueOf(sendpackg);
-                                }else{
+                                } else{
                                      text = "PACK:FAIL"+ String.valueOf(sendpackg);
                                 }
                             }

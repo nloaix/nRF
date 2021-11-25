@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
@@ -32,69 +33,10 @@
             android:layout_weight="4.11"
             android:orientation="vertical">
 
-
-            <!--EditText
-                android:id="@+id/sendText"
-                android:layout_width="102dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/sendButton"
-                android:ems="10"
-                android:enabled="false"
-                android:editable="false"
-                android:fontFamily="1"
-                android:lines="1"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:shadowRadius="1"
-                android:text="数据 发送"
-                /-->
-
-
-            <Button
-                android:id="@+id/oldButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/restButton"
-                android:layout_marginStart="110dp"
-                android:enabled="false"
-                android:gravity="center"
-                android:padding="22dp"
-                android:text="老化"
-                android:textSize="16dp" />
-
-            <Button
-                android:id="@+id/querButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/PackLabel"
-                android:layout_alignTop="@+id/sureButton"
-                android:enabled="false"
-                android:gravity="center"
-                android:padding="22dp"
-                android:text="查询"
-                android:textSize="16dp" />
-
-            <Button
-                android:id="@+id/restButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pakeMassge"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="102dp"
-                android:enabled="false"
-                android:gravity="center"
-                android:padding="22dp"
-                android:text="重启"
-                android:textSize="16dp" />
-
             <ListView
                 android:id="@+id/listMessage"
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
-                android:layout_above="@+id/sendButton"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="112dp"></ListView>
@@ -103,79 +45,75 @@
                 android:id="@+id/PackLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="142dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginStart="24dp"
+                android:layout_marginBottom="142dp"
                 android:text="总包数:0" />
 
             <TextView
                 android:id="@+id/pakeMassge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/sendButton2"
-                android:layout_alignStart="@+id/querButton3"
+                android:layout_alignTop="@+id/sendButton2"
+                android:layout_marginLeft="24dp"
                 android:text="已发包:0" />
 
+
             <Button
-                android:id="@+id/sureButton"
+                android:id="@+id/select_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="12dp"
-                android:enabled="false"
-                android:gravity="center"
-                android:padding="22dp"
-                android:text="2确认"
-                android:textSize="16dp" />
+                android:layout_above="@+id/sendButton2"
+                android:layout_alignStart="@id/sendButton2"
+                android:layout_marginStart="-1dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="17dp"
+                android:enabled="true"
+                android:text="请选择一个文件" />
 
+            <TextView
+                android:id="@+id/file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/select_file"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/select_file"
+                android:text="@string/fileName" />
 
             <Button
                 android:id="@+id/sendButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="109dp"
+                android:layout_marginStart="109dp"
+                android:layout_marginBottom="53dp"
                 android:enabled="false"
                 android:gravity="center"
                 android:padding="22dp"
                 android:text="1升级"
-                android:textSize="16dp" />
-            <Button
-                android:id="@+id/deolde"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/querButton3"
-                android:layout_alignParentEnd="@+id/querButton3"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="0dp"
-                android:enabled="false"
-                android:gravity="center"
-                android:padding="22dp"
-                android:text="去老化"
                 android:textSize="16dp" />
 
             <Button
                 android:id="@+id/upButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/querButton3"
-                android:layout_alignParentEnd="@+id/querButton3"
-                android:layout_marginStart="195dp"
-                android:layout_marginTop="0dp"
+                android:layout_alignTop="@+id/sendButton2"
+                android:layout_marginStart="50dp"
+                android:layout_toEndOf="@+id/sendButton2"
                 android:enabled="false"
                 android:gravity="center"
                 android:padding="22dp"
-                android:text="3开始"
+                android:text="开始"
                 android:textSize="16dp" />
+
 
         </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/RelativeLayout1"
+        android:id="@+id/RelativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
