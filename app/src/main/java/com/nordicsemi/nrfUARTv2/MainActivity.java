@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -42,6 +43,7 @@ import android.bluetooth.BluetoothManager;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,6 +51,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -84,6 +87,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private static final int UART_PROFILE_CONNECTED = 20;
     private static final int UART_PROFILE_DISCONNECTED = 21;
     private static final int STATE_OFF = 10;
+    private static final int REQUEST_SELECT_FILE = 11;   // 返回的文件Code
 
     TextView mRemoteRssiVal;
     RadioGroup mRg;
@@ -94,7 +98,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect, btnSend, upSend,selectFile;
-    private TextView PackTotal,pakenumber,fileName;
+    private TextView PackTotal,pakenumber;
+    private String filePath;
     //private EditText edtMessage;
 
     /**
@@ -170,8 +175,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
         return res;
     }
-
-
 
 
     public static String bytes2HexString(byte[] array) {
@@ -292,7 +295,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         PackTotal  = (TextView) findViewById(R.id.PackLabel);
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
         selectFile = (Button) findViewById(R.id.select_file);
-        fileName = (TextView) findViewById(R.id.file_name);
         service_init();
 
 
@@ -303,11 +305,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");   // 选择任意类型
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,REQUEST_SELECT_FILE);
             }
         });
-
-
 
         // Handler Disconnect & Connect button
         btnConnectDisconnect.setOnClickListener (new View.OnClickListener()
@@ -411,8 +411,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
 
-                    FileInputStream fin = new FileInputStream("/sdcard/OTA/G36_ME32F031C8T6_APP_20211112A.bin");
-                    Log.i(TAG,"寻找到bin文件");
+                    FileInputStream fin = new FileInputStream(filePath);
+                    Log.i(TAG,"寻找到bin文件路径=="+filePath);
 
                     int length = fin.available();
 
@@ -683,11 +683,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data)
     {
+
+        Log.d(TAG,"返回的result_code=="+resultCode);
         switch (requestCode)
         {
 
         case REQUEST_SELECT_DEVICE:
             //When the DeviceListActivity return, with the selected device address
+            // 当DeviceListActivity返回时，带有选择的设备地址
             if (resultCode == Activity.RESULT_OK && data != null)
             {
                 String deviceAddress = data.getStringExtra (BluetoothDevice.EXTRA_DEVICE);
@@ -696,8 +699,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 Log.d (TAG, "... onActivityResultdevice.address==" + mDevice + "mserviceValue" + mService);
                 ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - connecting");
                 mService.connect (deviceAddress);
-
-
             }
             break;
         case REQUEST_ENABLE_BT:
@@ -715,16 +716,36 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 finish();
             }
             break;
+        case REQUEST_SELECT_FILE:
+            if (resultCode == Activity.RESULT_OK && data != null){
+                Log.d(TAG,"此处表示返回的值为select_file"+data);
+                Uri uri = data.getData();
+                Log.d(TAG,"FILE URI=="+uri.toString());
+                // 得到path
+                String path = null;
+                String pathName = "";
+                try {
+                    path = fileUtils.getPath(this,uri);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG,"File Path"+path);
+                filePath = path;
+                pathName = path.substring(path.indexOf("G"));
+
+                ((TextView)findViewById(R.id.file_name)).setText(pathName);
+            }
+            break;
         default:
             Log.e (TAG, "wrong request code");
             break;
         }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
     public void onCheckedChanged (RadioGroup group, int checkedId)
     {
-
     }
 
 
