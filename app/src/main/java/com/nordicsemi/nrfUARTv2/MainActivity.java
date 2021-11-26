@@ -60,6 +60,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -87,7 +88,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private static final int UART_PROFILE_DISCONNECTED = 21;
     private static final int STATE_OFF = 10;
     private static final int REQUEST_SELECT_FILE = 11;   // 返回的文件Code
-    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
 
     TextView mRemoteRssiVal;
     RadioGroup mRg;
@@ -97,7 +97,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend, upSend,selectFile;
+    private Button btnConnectDisconnect, btnSend,selectFile;
     private TextView PackTotal,pakenumber,percentage;
     private String filePath;
 
@@ -239,15 +239,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         Log.d(TAG,"result===="+result);
                         if(sendpackg==(binLenth/128))
                         {
-                            Log.d(TAG,"此时的sendpackg=="+sendpackg);
-                            Log.d(TAG,"此时的binLength=="+binLenth);
                             String message = "04";
                             byte [] blbuf = {0x04};
                             mService.writeRXCharacteristic (blbuf);
+                            String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                             timer.cancel();
-                            upSend.setEnabled(true);
+//                            btnSend.setEnabled(false);
                         }
                     }
                 }
@@ -295,7 +294,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         messageListView.setDivider (null);
         btnConnectDisconnect = (Button) findViewById (R.id.btn_select);
         btnSend = (Button) findViewById (R.id.sendButton2);
-        upSend = (Button) findViewById (R.id.upButton);
         PackTotal  = (TextView) findViewById(R.id.PackLabel);
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
         selectFile = (Button) findViewById(R.id.select_file);
@@ -355,9 +353,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             @Override
             public void onClick (View v)
             {
-
-                //EditText editText = (EditText) findViewById(R.id.sendText);
-
                 String message = "升级命令";
                 byte[] value = {
 //                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x01, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf6,
@@ -371,6 +366,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     //send data to service
                     mService.writeRXCharacteristic (value);
                     //Update the log with time stamp
+                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                     listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                 }
@@ -381,63 +377,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 }
             }
         });
-
-        // Handler Send button 发送按钮线程 开始按钮
-        upSend.setOnClickListener (new View.OnClickListener()
-        {
-            @Override
-           public void onClick (View v)
-            {
-                String message = "开始命令";
-
-                upSend.setEnabled(false);
-
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                };
-
-                try{
-
-                    //Update the log with time stamp
-                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
-                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-
-                    FileInputStream fin = new FileInputStream(filePath);
-                    int length = fin.available();
-                    fin.read(binBuffer);
-                    binLenth = ((length/128)*128);
-                    Log.d(TAG,"binLength=="+binLenth);
-                    if(length%128!=0x00)
-                    {
-                        binLenth+=128;
-                       for (int ii = length; ii < binLenth; ii++) {
-                            binBuffer[ii] = (byte) 0xFF;
-                        }
-                    }
-                    sendpackg = 0x00;
-                    blepakgIndex = 0x00;
-
-                    PackTotal.setText("总包数:"+binLenth/128);
-                    pakenumber.setText("已发包:"+sendpackg);
-
-                    timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20s
-
-                    Log.e(TAG, "onClick_readbinlen: "+length);
-                    Log.e(TAG, "onClick_packbinlen: "+binLenth);
-
-                    fin.close();
-                }
-               catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-      });
     }
 
     //UART service connected/disconnected
@@ -487,10 +426,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     {
                         Log.d (TAG, "UART_CONNECT_MSG");
                         btnConnectDisconnect.setText ("Disconnect");
-                        btnSend.setEnabled (true);
-                        upSend.setEnabled(true);
                         selectFile.setEnabled(true);
                         ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - ready");
+                        String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                         listAdapter.add ("[" + currentDateTimeString + "] Connected to: " + mDevice.getName() );
                         messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                         mState = UART_PROFILE_CONNECTED;
@@ -508,14 +446,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         Log.d (TAG, "UART_DISCONNECT_MSG");
                         btnConnectDisconnect.setText ("Connect");
                         btnSend.setEnabled (false);
-                        upSend.setEnabled(false);
                         selectFile.setEnabled(false);
                         ( (TextView) findViewById (R.id.deviceName) ).setText ("Not Connected");
+                        String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                         listAdapter.add ("[" + currentDateTimeString + "] Disconnected to: " + mDevice.getName() );
                         mState = UART_PROFILE_DISCONNECTED;
                         mService.close();
                         //setUiState();
-
                     }
                 });
             }
@@ -539,8 +476,60 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                             String text = "";
 
-                            if(packSendFlag==true){
+                            if (rxValue[0]== 0x43) {
+                                String message = "开始命令";
 
+                                task = new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        // TODO Auto-generated method stub
+                                        Message message = new Message();
+                                        message.what = 1;
+                                        handler.sendMessage(message);
+                                    }
+                                };
+
+                                try {
+
+                                    //Update the log with time stamp
+                                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
+                                    listAdapter.add("[" + currentDateTimeString + "] TX: " + message);
+                                    messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+                                    FileInputStream fin = new FileInputStream(filePath);
+                                    if (filePath == null){
+                                        Log.d(TAG,"请选择一个文件");
+                                        Toast.makeText(getApplicationContext(), "Please chose a file", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        int length = fin.available();
+                                        fin.read(binBuffer);
+                                        binLenth = ((length / 128) * 128);
+                                        Log.d(TAG, "binLength==" + binLenth);
+                                        if (length % 128 != 0x00) {
+                                            binLenth += 128;
+                                            for (int ii = length; ii < binLenth; ii++) {
+                                                binBuffer[ii] = (byte) 0xFF;
+                                            }
+                                        }
+                                        sendpackg = 0x00;
+                                        blepakgIndex = 0x00;
+
+                                        PackTotal.setText("总包数:" + binLenth / 128);
+                                        pakenumber.setText("已发包:" + sendpackg);
+
+                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20s
+
+                                        Log.e(TAG, "onClick_readbinlen: " + length);
+                                        Log.e(TAG, "onClick_packbinlen: " + binLenth);
+
+                                        fin.close();
+                                    }
+                                }
+                                catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if(packSendFlag==true){
                                 if(rxValue[0]==0x06 || rxValue[0] == 0x04){
                                     packSendFlag=false;
                                      text = "PACK:OK "+String.valueOf(sendpackg);
@@ -553,9 +542,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             }
 
                             String veiwtext =  bytes2HexString(rxValue);
-
-                           // Log.e (TAG, "rxValue:" + text);
-
+                            String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] RX: " + veiwtext );
 
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
@@ -574,7 +561,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 showMessage ("Device doesn't support UART. Disconnecting");
                 mService.disconnect();
             }
-
 
         }
     };
@@ -716,6 +702,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 pathName = path.substring(path.indexOf("G"));
 
                 ((TextView)findViewById(R.id.file_name)).setText(pathName);
+                btnSend.setEnabled(true);
             }
             break;
         default:

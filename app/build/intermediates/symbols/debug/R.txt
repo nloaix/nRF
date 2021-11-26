@@ -26,7 +26,6 @@ int id rssival 0x7f030015
 int id select_file 0x7f030016
 int id sendButton2 0x7f030017
 int id title_devices 0x7f030018
-int id upButton 0x7f030019
 int layout device_element 0x7f040000
 int layout device_list 0x7f040001
 int layout main 0x7f040002
