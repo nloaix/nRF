@@ -61,11 +61,13 @@
 
 
             <TextView
+                android:id="@+id/percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_alignBottom="@id/sendButton2"
-                android:text="进度：100%"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="17dp"
+                android:text="进度：0%"
                 android:textSize="15dp" />
 
             <Button
@@ -74,7 +76,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/sendButton2"
                 android:layout_alignStart="@id/sendButton2"
-                android:layout_marginStart="-1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="17dp"
                 android:enabled="false"
@@ -112,7 +113,7 @@
                 android:layout_toEndOf="@+id/sendButton2"
                 android:enabled="false"
                 android:gravity="center"
-                android:padding="22dp"
+                android:padding="18dp"
                 android:text="开始"
                 android:textSize="16dp" />
 

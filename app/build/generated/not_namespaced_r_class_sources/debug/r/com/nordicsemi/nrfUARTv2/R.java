@@ -35,12 +35,13 @@ public final class R {
     public static final int new_devices=0x7f030010;
     public static final int paired=0x7f030011;
     public static final int pakeMassge=0x7f030012;
-    public static final int rssi=0x7f030013;
-    public static final int rssival=0x7f030014;
-    public static final int select_file=0x7f030015;
-    public static final int sendButton2=0x7f030016;
-    public static final int title_devices=0x7f030017;
-    public static final int upButton=0x7f030018;
+    public static final int percentage=0x7f030013;
+    public static final int rssi=0x7f030014;
+    public static final int rssival=0x7f030015;
+    public static final int select_file=0x7f030016;
+    public static final int sendButton2=0x7f030017;
+    public static final int title_devices=0x7f030018;
+    public static final int upButton=0x7f030019;
   }
   public static final class layout {
     public static final int device_element=0x7f040000;

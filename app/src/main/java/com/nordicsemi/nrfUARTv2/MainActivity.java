@@ -16,9 +16,6 @@
 
 package com.nordicsemi.nrfUARTv2;
 
-
-
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +35,7 @@ import com.nordicsemi.nrfUARTv2.UartService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListFragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -88,6 +87,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private static final int UART_PROFILE_DISCONNECTED = 21;
     private static final int STATE_OFF = 10;
     private static final int REQUEST_SELECT_FILE = 11;   // 返回的文件Code
+    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
 
     TextView mRemoteRssiVal;
     RadioGroup mRg;
@@ -98,9 +98,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect, btnSend, upSend,selectFile;
-    private TextView PackTotal,pakenumber;
+    private TextView PackTotal,pakenumber,percentage;
     private String filePath;
-    //private EditText edtMessage;
 
     /**
      * CRC16????
@@ -232,6 +231,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                         blepakgIndex = 0x00;
                         pakenumber.setText("已发包:"+sendpackg);
+                        // 百分比
+                        NumberFormat numberFormat = NumberFormat.getNumberInstance();   // 创建一个数值格式化对象
+                        numberFormat.setMaximumFractionDigits(2);    // 保留后两位
+                        String result = numberFormat.format((float) sendpackg / (float) (binLenth/128) * 100);
+                        percentage.setText("进度："+ result + "%");
+                        Log.d(TAG,"result===="+result);
                         if(sendpackg==(binLenth/128))
                         {
                             Log.d(TAG,"此时的sendpackg=="+sendpackg);
@@ -239,7 +244,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             String message = "04";
                             byte [] blbuf = {0x04};
                             mService.writeRXCharacteristic (blbuf);
-                            String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                             timer.cancel();
@@ -295,6 +299,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         PackTotal  = (TextView) findViewById(R.id.PackLabel);
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
         selectFile = (Button) findViewById(R.id.select_file);
+        percentage = (TextView) findViewById(R.id.percentage);
         service_init();
 
 
@@ -354,7 +359,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 //EditText editText = (EditText) findViewById(R.id.sendText);
 
                 String message = "升级命令";
-                //(byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x01, 0x01, 0x01, 0x02, (byte) 0xf1,
                 byte[] value = {
 //                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x01, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf6,
 //                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x02, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf5
@@ -367,24 +371,18 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     //send data to service
                     mService.writeRXCharacteristic (value);
                     //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                     listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
-                    //edtMessage.setText("");
-                    //} catch (UnsupportedEncodingException e) {
                 }
                 catch (Exception e)
                 {
                     // TODO Auto-generated catch block
                     //e.printStackTrace();
                 }
-//                SureButton.setEnabled(true);
-
             }
         });
 
-        // Set initial UI state
-        // Handler Send button发送按钮线程 开始按钮
+        // Handler Send button 发送按钮线程 开始按钮
         upSend.setOnClickListener (new View.OnClickListener()
         {
             @Override
@@ -407,23 +405,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 try{
 
                     //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                     listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
 
                     FileInputStream fin = new FileInputStream(filePath);
-                    Log.i(TAG,"寻找到bin文件路径=="+filePath);
-
                     int length = fin.available();
-
-                    Log.d(TAG,"LENGTH==="+length);
-
                     fin.read(binBuffer);
-
                     binLenth = ((length/128)*128);
                     Log.d(TAG,"binLength=="+binLenth);
-
-
                     if(length%128!=0x00)
                     {
                         binLenth+=128;
@@ -496,13 +485,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 {
                     public void run()
                     {
-                        String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                         Log.d (TAG, "UART_CONNECT_MSG");
                         btnConnectDisconnect.setText ("Disconnect");
-                        //  edtMessage.setEnabled(true);
                         btnSend.setEnabled (true);
                         upSend.setEnabled(true);
-//                        SureButton.setEnabled(true);
+                        selectFile.setEnabled(true);
                         ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - ready");
                         listAdapter.add ("[" + currentDateTimeString + "] Connected to: " + mDevice.getName() );
                         messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
@@ -518,13 +505,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 {
                     public void run()
                     {
-                        String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                         Log.d (TAG, "UART_DISCONNECT_MSG");
                         btnConnectDisconnect.setText ("Connect");
-                        // edtMessage.setEnabled(false);
                         btnSend.setEnabled (false);
                         upSend.setEnabled(false);
-//                        SureButton.setEnabled(false);
+                        selectFile.setEnabled(false);
                         ( (TextView) findViewById (R.id.deviceName) ).setText ("Not Connected");
                         listAdapter.add ("[" + currentDateTimeString + "] Disconnected to: " + mDevice.getName() );
                         mState = UART_PROFILE_DISCONNECTED;
@@ -568,8 +553,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             }
 
                             String veiwtext =  bytes2HexString(rxValue);
-
-                            String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
 
                            // Log.e (TAG, "rxValue:" + text);
 
@@ -636,7 +619,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         unbindService (mServiceConnection);
         mService.stopSelf();
         mService = null;
-
     }
 
     @Override
