@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/main.xml" value="0.464839094159714" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_element.xml" value="0.67" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_list.xml" value="0.33" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/main.xml" value="0.4469606674612634" />
       </map>
     </option>
   </component>

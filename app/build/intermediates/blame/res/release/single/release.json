@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\layout_device_element.xml.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\layout\\device_element.xml"
+    },
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\drawable-hdpi_nrfuart_hdpi_icon.png.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\drawable-hdpi\\nrfuart_hdpi_icon.png"
+    },
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\layout_title_bar.xml.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\layout\\title_bar.xml"
+    },
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\layout_main.xml.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\layout_device_list.xml.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\layout\\device_list.xml"
+    },
+    {
+        "merged": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\res\\merged\\release\\layout_message_detail.xml.flat",
+        "source": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\src\\main\\res\\layout\\message_detail.xml"
+    }
+]

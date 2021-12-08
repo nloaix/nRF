@@ -1,12 +1,22 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
-INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-49:12
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+MERGED from [com.android.support:support-v4:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6ae44ecfdbe525c6cf9d849072167ce5\support-v4-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\cd7b4eabd84b01e2dff0fd7f369073b4\support-media-compat-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\05d7562acd194fb1a1e3c927e61e90af\support-fragment-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\31716d5493df58adf41f3252cbc8a8a1\support-core-ui-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\0986f3f0129dc26c0eaa2d06208be0cb\support-core-utils-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6931bc3fe5868b0ab5606c1192ce8d93\support-compat-27.1.1\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\a29701de75fb599a6d5b46865fc4d183\runtime-1.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\18787156f110e201db47575423b9af04\livedata-core-1.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\15710bad692d7514ce221e254adcf49e\viewmodel-1.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\d1a0d104cb76491b0a79c0ad09abcfca\runtime-1.1.0\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
+INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:17:1-51:12
 	package
 		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:18:5-39
 		INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
@@ -33,64 +43,92 @@ uses-permission#android.permission.READ_CONTACTS
 ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:5-72
 	android:name
 		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:22-69
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:5-97
-	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:26:5-79
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:5-80
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:26:22-77
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:25:5-80
+	android:name
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:25:22-78
 uses-permission#android.permission.WAKE_LOCK
 ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:27:5-67
 	android:name
 		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:27:22-65
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:29:5-81
+	android:name
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:29:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:30:5-79
+	android:name
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:30:22-76
 application
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:30:5-47:19
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:32:5-49:19
 	android:label
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:31:9-41
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:33:9-41
 	android:icon
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:33:9-51
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:35:9-51
 	android:theme
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:32:9-56
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:34:9-56
 activity#com.nordicsemi.nrfUARTv2.MainActivity
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:34:9-44:20
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:36:9-46:20
 	android:label
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:36:13-45
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:38:13-45
 	android:windowSoftInputMode
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:37:13-54
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:39:13-54
 	android:configChanges
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:38:13-74
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:40:13-74
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:35:13-41
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:37:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:39:13-43:29
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:41:13-45:29
 action#android.intent.action.MAIN
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:40:17-69
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:17-69
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:40:25-66
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:17-77
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:44:17-77
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:27-74
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:44:27-74
 activity#com.nordicsemi.nrfUARTv2.DeviceListActivity
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:45:9-132
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:9-132
 	android:label
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:45:54-86
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:54-86
 	android:theme
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:45:87-130
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:87-130
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:45:19-53
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:19-53
 service#com.nordicsemi.nrfUARTv2.UartService
-ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:46:9-71
+ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:9-71
 	android:enabled
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:46:18-40
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:18-40
 	android:name
-		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:46:41-68
+		ADDED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:41-68
 uses-sdk
 INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
 INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:support-v4:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6ae44ecfdbe525c6cf9d849072167ce5\support-v4-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6ae44ecfdbe525c6cf9d849072167ce5\support-v4-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\cd7b4eabd84b01e2dff0fd7f369073b4\support-media-compat-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\cd7b4eabd84b01e2dff0fd7f369073b4\support-media-compat-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\05d7562acd194fb1a1e3c927e61e90af\support-fragment-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\05d7562acd194fb1a1e3c927e61e90af\support-fragment-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\31716d5493df58adf41f3252cbc8a8a1\support-core-ui-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\31716d5493df58adf41f3252cbc8a8a1\support-core-ui-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\0986f3f0129dc26c0eaa2d06208be0cb\support-core-utils-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\0986f3f0129dc26c0eaa2d06208be0cb\support-core-utils-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6931bc3fe5868b0ab5606c1192ce8d93\support-compat-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\6931bc3fe5868b0ab5606c1192ce8d93\support-compat-27.1.1\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\a29701de75fb599a6d5b46865fc4d183\runtime-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\a29701de75fb599a6d5b46865fc4d183\runtime-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\18787156f110e201db47575423b9af04\livedata-core-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\18787156f110e201db47575423b9af04\livedata-core-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\15710bad692d7514ce221e254adcf49e\viewmodel-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\15710bad692d7514ce221e254adcf49e\viewmodel-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\d1a0d104cb76491b0a79c0ad09abcfca\runtime-1.1.0\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] C:\Program Files\Java\jdk1.8.0_301\caches\transforms-2\files-2.1\d1a0d104cb76491b0a79c0ad09abcfca\runtime-1.1.0\AndroidManifest.xml:20:5-44
 INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
 INJECTED from D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion

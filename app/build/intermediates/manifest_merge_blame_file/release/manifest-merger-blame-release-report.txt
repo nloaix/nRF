@@ -1,0 +1,105 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3 Copyright (C) 2013 The Android Open Source Project
+4
+5     Licensed under the Apache License, Version 2.0 (the "License");
+6     you may not use this file except in compliance with the License.
+7     You may obtain a copy of the License at
+8
+9          http://www.apache.org/licenses/LICENSE-2.0
+10
+11     Unless required by applicable law or agreed to in writing, software
+12     distributed under the License is distributed on an "AS IS" BASIS,
+13     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14     See the License for the specific language governing permissions and
+15     limitations under the License.
+16-->
+17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+18    package="com.nordicsemi.nrfUARTv2"
+19    android:versionCode="43"
+20    android:versionName="2.0" >
+21
+22    <uses-sdk
+23        android:minSdkVersion="18"
+23-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
+24        android:targetSdkVersion="27" />
+24-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml
+25
+26    <uses-permission android:name="android.permission.BLUETOOTH" />
+26-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:21:5-68
+26-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:21:22-65
+27    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+27-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:22:5-74
+27-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:22:22-71
+28    <uses-permission android:name="android.permission.READ_CONTACTS" />
+28-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:5-72
+28-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:22-69
+29    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+29-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:5-97
+29-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:22-78
+30    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+30-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:5-97
+30-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:24:22-78
+31    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+31-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:26:5-79
+31-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:26:22-77
+32    <uses-permission android:name="android.permission.WAKE_LOCK" />
+32-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:27:5-67
+32-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:27:22-65
+33    <uses-permission android:name="android.permission.READ_CONTACTS" />
+33-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:5-72
+33-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:23:22-69
+34    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+34-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:29:5-81
+34-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:29:22-78
+35    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+35-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:30:5-79
+35-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:30:22-76
+36
+37    <application
+37-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:32:5-49:19
+38        android:icon="@drawable/nrfuart_hdpi_icon"
+38-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:35:9-51
+39        android:label="@string/app_name"
+39-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:33:9-41
+40        android:theme="@android:style/Theme.Holo.Light" >
+40-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:34:9-56
+41        <activity
+41-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:36:9-46:20
+42            android:name="com.nordicsemi.nrfUARTv2.MainActivity"
+42-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:37:13-41
+43            android:configChanges="keyboardHidden|orientation|screenSize"
+43-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:40:13-74
+44            android:label="@string/app_name"
+44-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:38:13-45
+45            android:windowSoftInputMode="stateHidden" >
+45-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:39:13-54
+46            <intent-filter>
+46-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:41:13-45:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:17-69
+47-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:44:17-77
+49-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:44:27-74
+50            </intent-filter>
+51        </activity>
+52        <activity
+52-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:9-132
+53            android:name="com.nordicsemi.nrfUARTv2.DeviceListActivity"
+53-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:19-53
+54            android:label="@string/app_name"
+54-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:54-86
+55            android:theme="@android:style/Theme.Dialog" />
+55-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:47:87-130
+56
+57        <service
+57-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:9-71
+58            android:name="com.nordicsemi.nrfUARTv2.UartService"
+58-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:41-68
+59            android:enabled="true" />
+59-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:48:18-40
+60    </application>
+61
+62</manifest>

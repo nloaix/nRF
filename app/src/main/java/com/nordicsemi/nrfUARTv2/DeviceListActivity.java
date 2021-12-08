@@ -27,6 +27,13 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+
+
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+
+
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -39,6 +46,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -69,6 +77,9 @@ public class DeviceListActivity extends Activity
     private static final long SCAN_PERIOD = 10000; //10 seconds
     private Handler mHandler;
     private boolean mScanning;
+    private BluetoothManager bluetoothManager;
+    private BluetoothLeScanner bluetoothLeScanner;
+    private ListView mLvBtDevices;
 
 
 
@@ -84,6 +95,10 @@ public class DeviceListActivity extends Activity
         layoutParams.gravity = Gravity.TOP;
         layoutParams.y = 200;
         mHandler = new Handler();
+        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+//        mbluetoothAdapter = bluetoothManager.getAdapter();
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+        bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature (PackageManager.FEATURE_BLUETOOTH_LE) )
@@ -117,6 +132,7 @@ public class DeviceListActivity extends Activity
                 if (mScanning == false)
                 {
                     scanLeDevice (true);
+
                 }
                 else
                 {
@@ -124,7 +140,6 @@ public class DeviceListActivity extends Activity
                 }
             }
         });
-
     }
 
     private void populateList()
@@ -148,6 +163,7 @@ public class DeviceListActivity extends Activity
         final Button cancelButton = (Button) findViewById (R.id.btn_cancel);
         if (enable)
         {
+            Log.i(TAG,"开始进行扫描");
             // Stops scanning after a pre-defined scan period.
             mHandler.postDelayed (new Runnable()
             {
@@ -155,79 +171,113 @@ public class DeviceListActivity extends Activity
                 public void run()
                 {
                     mScanning = false;
-                    mBluetoothAdapter.stopLeScan (mLeScanCallback);
-
+//                    mBluetoothAdapter.stopLeScan (mLeScanCallback);
+                    bluetoothLeScanner.stopScan(scanCallback);
                     cancelButton.setText (R.string.scan);
-
+                    Log.i(TAG,"devices的列表长度=="+ deviceAdapter.getCount());
                 }
             }, SCAN_PERIOD);
 
             mScanning = true;
-            mBluetoothAdapter.startLeScan (mLeScanCallback);
+//            mBluetoothAdapter.startLeScan (mLeScanCallback);
+            bluetoothLeScanner.startScan(scanCallback);
             cancelButton.setText (R.string.cancel);
         }
         else
         {
             mScanning = false;
-            mBluetoothAdapter.stopLeScan (mLeScanCallback);
+//            mBluetoothAdapter.stopLeScan (mLeScanCallback);
+            bluetoothLeScanner.stopScan(scanCallback);
             cancelButton.setText (R.string.scan);
         }
 
+//        mLvBtDevices = findViewById(R.id.new_devices);
+//        deviceAdapter = new DeviceAdapter(this,this.deviceList);
+//        mLvBtDevices.setAdapter(deviceAdapter);
+//        mLvBtDevices.setOnItemClickListener( new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i(TAG,"进入后期数据");
+//            }
+//        });
     }
 
-    private BluetoothAdapter.LeScanCallback mLeScanCallback =
-        new BluetoothAdapter.LeScanCallback()
-    {
+
+
+//    private BluetoothAdapter.LeScanCallback mLeScanCallback =
+//        new BluetoothAdapter.LeScanCallback()
+//    {
+//
+//        @Override
+//        public void onLeScan (final BluetoothDevice device, final int rssi, byte[] scanRecord)
+//        {
+//            runOnUiThread (new Runnable()
+//            {
+//                @Override
+//                public void run()
+//                {
+//
+//                    runOnUiThread (new Runnable()
+//                    {
+//                        @Override
+//                        public void run()
+//                        {
+//                            addDevice (device, rssi);
+//                        }
+//                    });
+//
+//                }
+//            });
+//        }
+//    };
+
+    private ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+            BluetoothDevice device = result.getDevice();
+//            int rssi = result.getRssi();
+//            Log.d(TAG,"device"+device);
+//            Log.d(TAG,"onScanResult:" + result.toString());
+//            addDevice(device);
+            deviceAdapter.addDevice(device);
+        }
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            super.onBatchScanResults(results);
+        }
 
         @Override
-        public void onLeScan (final BluetoothDevice device, final int rssi, byte[] scanRecord)
-        {
-            runOnUiThread (new Runnable()
-            {
-                @Override
-                public void run()
-                {
-
-                    runOnUiThread (new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            addDevice (device, rssi);
-                        }
-                    });
-
-                }
-            });
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+            Log.d(TAG,"onScanFailed:" + errorCode);
         }
     };
 
-    private void addDevice (BluetoothDevice device, int rssi)
-    {
-        boolean deviceFound = false;
-
-for (BluetoothDevice listDev : deviceList)
-        {
-            if (listDev.getAddress().equals (device.getAddress() ) )
-            {
-                deviceFound = true;
-                break;
-            }
-        }
 
 
-        devRssiValues.put (device.getAddress(), rssi);
-        if (!deviceFound)
-        {
-            deviceList.add (device);
-            mEmptyList.setVisibility (View.GONE);
-
-
-
-
-            deviceAdapter.notifyDataSetChanged();
-        }
-    }
+//    private void addDevice (BluetoothDevice device, int rssi)
+//    {
+//        boolean deviceFound = false;
+//
+//for (BluetoothDevice listDev : deviceList)
+//        {
+//            if (listDev.getAddress().equals (device.getAddress() ) )
+//            {
+//                deviceFound = true;
+//                break;
+//            }
+//        }
+//
+//
+//        devRssiValues.put (device.getAddress(), rssi);
+//        if (!deviceFound)
+//        {
+//            deviceList.add (device);
+//            mEmptyList.setVisibility (View.GONE);
+//            deviceAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     @Override
     public void onStart()
@@ -243,16 +293,16 @@ for (BluetoothDevice listDev : deviceList)
     public void onStop()
     {
         super.onStop();
-        mBluetoothAdapter.stopLeScan (mLeScanCallback);
-
+//        mBluetoothAdapter.stopLeScan (mLeScanCallback);
+        bluetoothLeScanner.stopScan(scanCallback);
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        mBluetoothAdapter.stopLeScan (mLeScanCallback);
-
+//        mBluetoothAdapter.stopLeScan (mLeScanCallback);
+        bluetoothLeScanner.stopScan(scanCallback);
     }
 
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener()
@@ -262,8 +312,8 @@ for (BluetoothDevice listDev : deviceList)
         public void onItemClick (AdapterView<?> parent, View view, int position, long id)
         {
             BluetoothDevice device = deviceList.get (position);
-            mBluetoothAdapter.stopLeScan (mLeScanCallback);
-
+//            mBluetoothAdapter.stopLeScan (mLeScanCallback);
+            bluetoothLeScanner.stopScan(scanCallback);
             Bundle b = new Bundle();
             b.putString (BluetoothDevice.EXTRA_DEVICE, deviceList.get (position).getAddress() );
 
@@ -335,11 +385,11 @@ for (BluetoothDevice listDev : deviceList)
             final TextView tvrssi = (TextView) vg.findViewById (R.id.rssi);
 
             tvrssi.setVisibility (View.VISIBLE);
-            byte rssival = (byte) devRssiValues.get (device.getAddress() ).intValue();
-            if (rssival != 0)
-            {
-                tvrssi.setText ("Rssi = " + String.valueOf (rssival) );
-            }
+//            byte rssival = (byte) devRssiValues.get (device.getAddress() ).intValue();
+//            if (rssival != 0)
+//            {
+//                tvrssi.setText ("Rssi = " + String.valueOf (rssival) );
+//            }
 
             tvname.setText (device.getName() );
             tvadd.setText (device.getAddress() );
@@ -364,6 +414,19 @@ for (BluetoothDevice listDev : deviceList)
                 tvrssi.setTextColor (Color.WHITE);
             }
             return vg;
+        }
+
+        public void addDevice(BluetoothDevice device){
+            boolean canAdd = true;
+            for (BluetoothDevice device1 : devices){
+                if (device1.getAddress().equals(device.getAddress())){
+                    canAdd = false;
+                }
+            }
+            if (canAdd){
+                devices.add(device);
+                notifyDataSetChanged();
+            }
         }
     }
     private void showMessage (String msg)

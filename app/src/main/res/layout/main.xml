@@ -33,40 +33,43 @@
             android:layout_weight="4.11"
             android:orientation="vertical">
 
+
             <ListView
                 android:id="@+id/listMessage"
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="112dp"></ListView>
+                android:layout_marginBottom="112dp">
+            </ListView>
 
             <TextView
                 android:id="@+id/PackLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/pakeMassge"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="24dp"
-                android:layout_marginBottom="142dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginBottom="12dp"
                 android:text="总包数:0" />
 
             <TextView
                 android:id="@+id/pakeMassge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/sendButton2"
-                android:layout_marginLeft="24dp"
+                android:layout_above="@+id/percentage"
+                android:layout_marginStart="35dp"
+                android:layout_marginBottom="12dp"
                 android:text="已发包:0" />
-
 
             <TextView
                 android:id="@+id/percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/sendButton2"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="17dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="80dp"
                 android:text="进度：0%"
                 android:textSize="15dp" />
 
@@ -74,35 +77,54 @@
                 android:id="@+id/select_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/sendButton2"
-                android:layout_alignStart="@id/sendButton2"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="17dp"
+                android:layout_below="@+id/listMessage"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="44dp"
+                android:layout_toStartOf="@+id/sendButton2"
+                android:layout_toEndOf="@+id/PackLabel"
                 android:enabled="false"
                 android:text="请选择一个文件" />
+
 
             <TextView
                 android:id="@+id/file_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/select_file"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@id/select_file"
+                android:layout_below="@id/select_file"
+                android:layout_alignLeft="@id/select_file"
                 android:text="@string/fileName" />
 
             <Button
                 android:id="@+id/sendButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="130dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="132dp"
                 android:enabled="false"
                 android:gravity="center"
-                android:padding="18dp"
                 android:text="1升级"
                 android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/qrcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@id/select_file"
+                android:layout_marginBottom="50dp"
+                android:text="@string/qrcode" />
+
+            <Button
+                android:id="@+id/writeMAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/qrcode"
+                android:layout_marginEnd="62dp"
+                android:text="@string/writeMAC" />
 
 
         </RelativeLayout>

@@ -55,10 +55,12 @@ import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.LoginFilter;
 import android.util.Log;
@@ -88,6 +90,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private static final int UART_PROFILE_DISCONNECTED = 21;
     private static final int STATE_OFF = 10;
     private static final int REQUEST_SELECT_FILE = 11;   // 返回的文件Code
+    private static final String DECODED_CONTENT_KEY = "codedContent";
+    private static final int REQUEST_CODE_SCAN = 10;  // 扫描权限返回值
 
     TextView mRemoteRssiVal;
     RadioGroup mRg;
@@ -97,7 +101,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend,selectFile;
+    private Button btnConnectDisconnect, btnSend,selectFile,qrcode,writeMAC;
     private TextView PackTotal,pakenumber,percentage;
     private String filePath;
 
@@ -176,13 +180,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
 
+    // 16进制转换
     public static String bytes2HexString(byte[] array) {
         StringBuilder builder = new StringBuilder();
-
         for (byte b : array) {
             String hex = Integer.toHexString(b & 0xFF);
+
             if (hex.length() == 1) {
-                hex = '0' + hex;
+                hex =  hex + '0';
             }
             builder.append(hex);
         }
@@ -204,6 +209,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         @Override
         public void handleMessage(Message msg) {
 
+            // 得到用户的选择权限结果
             try{
                 if(blepakgIndex==0x00){
                     send128Buffer[0] = 0x01;
@@ -273,6 +279,18 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     };
 
+    // 数组拼接
+//    public static void newByte (byte[] bt2)
+//    {
+//        byte[] bt1 = {(byte)0xFE, (byte)0xF0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x00};
+//        System.arraycopy(bt2, 0, bt1, 3, bt2.length);
+//
+//        Log.d(TAG,"拼接后的数组是=="+bytes2HexString(bt1));
+//        byte[] bt3 =  hexStringToBytes(makeChecksum(byte2HexString(bt1)));
+//        System.arraycopy(bt3,0,bt1,9,1);
+//        Log.d(TAG,"拼接校验码后的数组是=="+byte2HexString(bt1));
+//    }
+
 
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -298,7 +316,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
         selectFile = (Button) findViewById(R.id.select_file);
         percentage = (TextView) findViewById(R.id.percentage);
+        qrcode = (Button) findViewById(R.id.qrcode);
+        writeMAC = (Button) findViewById(R.id.writeMAC);
         service_init();
+
+
 
 
         // OnClick select a file
@@ -320,6 +342,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             {
                 if (!mBtAdapter.isEnabled() )
                 {
+                    // 表示蓝牙不可用
                     Log.i (TAG, "onClick - BT not enabled yet");
                     Intent enableIntent = new Intent (BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult (enableIntent, REQUEST_ENABLE_BT);
@@ -361,6 +384,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 };
 
                 Log.e (TAG, "onClick: send like bool");
+
                 try
                 {
                     //send data to service
@@ -368,6 +392,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     //Update the log with time stamp
                     String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                     listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
+                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + bytes2HexString(value));
                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                 }
                 catch (Exception e)
@@ -412,9 +437,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private final BroadcastReceiver UARTStatusChangeReceiver = new BroadcastReceiver()
     {
 
+
+
         public void onReceive (Context context, Intent intent)
         {
             String action = intent.getAction();
+
+            Log.i(TAG,"ACTION============" + action);
 
             final Intent mIntent = intent;
             //*********************//
@@ -466,6 +495,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             //*********************//
             if (action.equals (UartService.ACTION_DATA_AVAILABLE) )
             {
+
                 final byte[] rxValue = intent.getByteArrayExtra (UartService.EXTRA_DATA);
                 runOnUiThread (new Runnable()
                 {
@@ -542,6 +572,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             }
 
                             String veiwtext =  bytes2HexString(rxValue);
+                            Log.d(TAG,veiwtext);
                             String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] RX: " + veiwtext );
 
