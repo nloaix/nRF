@@ -26,19 +26,30 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-    <color name="black">#FF000000</color>
-    <color name="whitegrey">#FFF2F2F2</color>
-    <!-- AlertDialog text color fix thanks to Shawn Castrianni, see: http://groups.google.com/group/android-developers/browse_thread/thread/f0b34621d3a70c4b -->
-    <style name="DialogLight" parent="@android:style/Theme.Dialog">
-        
-        <item name="android:windowBackground">@color/whitegrey</item>
-    	<item name="android:textColor">@color/black</item>
-    </style>
+<!--     Application theme. -->
+<!--    <style name="AppTheme" parent="AppBaseTheme">-->
+<!--        &lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;-->
+<!--    </style>-->
+<!--    <color name="black">#FF000000</color>-->
+<!--    <color name="whitegrey">#FFF2F2F2</color>-->
+<!--    &lt;!&ndash; AlertDialog text color fix thanks to Shawn Castrianni, see: http://groups.google.com/group/android-developers/browse_thread/thread/f0b34621d3a70c4b &ndash;&gt;-->
+<!--    <style name="DialogLight" parent="@android:style/Theme.Dialog">-->
+
+<!--        <item name="android:windowBackground">@color/whitegrey</item>-->
+<!--    	<item name="android:textColor">@color/black</item>-->
+<!--    </style>-->
+
+    <!-- Base application theme. -->
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="android:colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
 
 </resources>

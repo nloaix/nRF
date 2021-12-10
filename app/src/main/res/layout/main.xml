@@ -41,6 +41,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="112dp">
+
+
             </ListView>
 
             <TextView
@@ -51,7 +53,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="35dp"
                 android:layout_marginBottom="12dp"
-                android:text="总包数:0" />
+                android:text="总包数:000" />
 
             <TextView
                 android:id="@+id/pakeMassge"
@@ -73,19 +75,18 @@
                 android:text="进度：0%"
                 android:textSize="15dp" />
 
+
             <Button
                 android:id="@+id/select_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/listMessage"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="120dp"
-                android:layout_marginEnd="44dp"
-                android:layout_toStartOf="@+id/sendButton2"
+                android:layout_above="@+id/writeMAC"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="33dp"
                 android:layout_toEndOf="@+id/PackLabel"
                 android:enabled="false"
-                android:text="请选择一个文件" />
-
+                android:text="请选择一个文件"
+                android:textSize="17dp" />
 
             <TextView
                 android:id="@+id/file_name"
@@ -93,40 +94,48 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/select_file"
                 android:layout_alignLeft="@id/select_file"
+                android:layout_marginTop="-33dp"
                 android:text="@string/fileName" />
 
             <Button
                 android:id="@+id/sendButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="132dp"
+                android:layout_alignTop="@id/select_file"
+                android:layout_marginStart="13dp"
+                android:layout_toEndOf="@+id/select_file"
                 android:enabled="false"
-                android:gravity="center"
                 android:text="1升级"
-                android:textSize="16dp" />
+                android:textSize="17dp" />
 
             <Button
-                android:id="@+id/qrcode"
+                android:id="@+id/qrcode_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@id/select_file"
+                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="50dp"
-                android:text="@string/qrcode" />
+                android:text="@string/qrcode"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/qrcode_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/select_file"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp"
+                android:text="@string/request_data" />
 
             <Button
                 android:id="@+id/writeMAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@id/qrcode"
-                android:layout_marginEnd="62dp"
-                android:text="@string/writeMAC" />
-
-
+                android:layout_alignTop="@id/qrcode_scan"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/qrcode_scan"
+                android:text="@string/writeMAC"
+                android:textSize="17dp"/>
         </RelativeLayout>
     </LinearLayout>
 

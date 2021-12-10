@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_element.xml" value="0.67" />
-        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_list.xml" value="0.33" />
-        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/main.xml" value="0.4469606674612634" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/drawable/selector_capture_back.xml" value="0.15092592592592594" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/capture.xml" value="0.31417979610750696" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_element.xml" value="0.75" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/device_list.xml" value="0.2" />
+        <entry key="..\:/xl/AndroidProgram3/nRFUART_GoogleAPI_Android4.3+/app/src/main/res/layout/main.xml" value="0.2283840190816935" />
       </map>
     </option>
   </component>

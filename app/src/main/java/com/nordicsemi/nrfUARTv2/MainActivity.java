@@ -32,7 +32,9 @@ import java.util.TimerTask;
 
 
 import com.nordicsemi.nrfUARTv2.UartService;
+import com.nordicsemi.nrfUARTv2.zxing.android.CaptureActivity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -48,6 +50,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -60,6 +63,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.LoginFilter;
@@ -101,9 +105,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend,selectFile,qrcode,writeMAC;
-    private TextView PackTotal,pakenumber,percentage;
+    private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC;
+    private TextView PackTotal,pakenumber,percentage,qrcode_data;
     private String filePath;
+    private byte[] bt;
 
     /**
      * CRC16????
@@ -187,7 +192,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             String hex = Integer.toHexString(b & 0xFF);
 
             if (hex.length() == 1) {
-                hex =  hex + '0';
+                hex = '0' + hex;
             }
             builder.append(hex);
         }
@@ -268,9 +273,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     mService.writeRXCharacteristic (bleSendbuf);
                     blepakgIndex++;
                 }
-
             }
-
             catch(Exception e){
                 e.printStackTrace();
             }
@@ -278,18 +281,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             super.handleMessage(msg);
         }
     };
-
-    // 数组拼接
-//    public static void newByte (byte[] bt2)
-//    {
-//        byte[] bt1 = {(byte)0xFE, (byte)0xF0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x00};
-//        System.arraycopy(bt2, 0, bt1, 3, bt2.length);
-//
-//        Log.d(TAG,"拼接后的数组是=="+bytes2HexString(bt1));
-//        byte[] bt3 =  hexStringToBytes(makeChecksum(byte2HexString(bt1)));
-//        System.arraycopy(bt3,0,bt1,9,1);
-//        Log.d(TAG,"拼接校验码后的数组是=="+byte2HexString(bt1));
-//    }
 
 
     @Override
@@ -316,11 +307,50 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         pakenumber  = (TextView) findViewById(R.id.pakeMassge);
         selectFile = (Button) findViewById(R.id.select_file);
         percentage = (TextView) findViewById(R.id.percentage);
-        qrcode = (Button) findViewById(R.id.qrcode);
+        qrcode_scan = (Button) findViewById(R.id.qrcode_scan);
         writeMAC = (Button) findViewById(R.id.writeMAC);
+        qrcode_data = (TextView) findViewById(R.id.qrcode_data);
         service_init();
 
+        // 扫描二维码
+        qrcode_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.qrcode_scan:
+                        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                            goScan();
+                        } else {
+                            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CAMERA},1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
+        writeMAC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "写入MAC地址";
+
+                try
+                {
+                    mService.writeRXCharacteristic (bt);
+                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
+                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
+                    listAdapter.add ("[" + currentDateTimeString + "] TX: " + bytes2HexString(bt));
+                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
+                }
+                catch (Exception e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
         // OnClick select a file
@@ -404,6 +434,115 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         });
     }
 
+    // 调用扫描
+    private void goScan(){
+        Intent intent = new Intent(MainActivity.this,CaptureActivity.class);
+        startActivityForResult(intent,REQUEST_CODE_SCAN);
+    }
+
+    // 去掉字符串中的：
+    private static String replaceString(String str){
+        String regEx = "[:]";
+        String rep = "";
+        String newString =  str.replaceAll(regEx,rep);
+        Log.d(TAG,newString);
+        return newString;
+    }
+
+    // 转成十六进制
+    public static byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        Log.d(TAG,bytes2HexString(d));
+        return d;
+    }
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    // 两个byte[]的拼接
+    static byte[] bt1 = {
+            (byte)0xFE, (byte)0xF0, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,0x00
+    };
+
+    public static byte[] newByte (byte[] bt2) {
+        System.arraycopy(bt2, 0, bt1, 3, 6);
+        Log.d(TAG,bytes2HexString(bt1));
+        byte[] bt3 = hexStringToBytes(makeChecksum(bytes2HexString(bt1)));  //拼接后直接在此方法中调用makeChecksum方法计算校验值
+        System.arraycopy(bt3,0,bt1,9,1);    // 将计算的校验码得到替换掉最后一位
+//        Log.d(TAG,"拼接校验后的byte指令"+bytes2HexString(bt1));
+        return bt1;
+    }
+
+
+    // 校验码计算
+    public static String makeChecksum(String hexdata) {
+        if (hexdata == null || hexdata.equals("")) {
+            return "00";
+        }
+        hexdata = hexdata.replaceAll(" ", "");
+        int total = 0;
+        int len = hexdata.length();
+        if (len % 2 != 0) {
+            return "00";
+        }
+        int num = 0;
+        while (num < len) {
+            String s = hexdata.substring(num, num + 2);
+            total += Integer.parseInt(s, 16);
+            num = num + 2;
+        }
+        Log.d(TAG,"校验码======"+hexInt((total & 0xff) << 8));
+        Log.d(TAG,"校验码======"+hexInt(total));
+        return hexInt((total & 0xff) << 8);
+    }
+
+    private static String hexInt(int total) {
+        int a = total / 256;
+        int b = total % 256;
+        if (a > 255) {
+            return hexInt(a) + format(b);
+        }
+        return format(a) + format(b);
+    }
+
+    private static String format(int hex) {
+        String hexa = Integer.toHexString(hex);
+        int len = hexa.length();
+        if (len < 2) {
+            hexa = "0" + hexa;
+        }
+        return hexa;
+    }
+
+    // 返回调用权限值
+    public void onRequestPermissionsResult(int requsetCode,String[] permissions,int[] grantResults) {
+        Log.d(TAG,"返回请求值=="+requsetCode);
+        switch (requsetCode) {
+            case 1:
+//                需要使用core3.3.0及以上的jar包版本 才能得到此回调
+                Log.d(TAG,"grantResult=====" + grantResults.length);
+                Log.d(TAG,"grantResult[0]=====" + grantResults[0]);
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goScan();
+                } else {
+                    Toast.makeText(this, "拒绝相机权限申请", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     //UART service connected/disconnected
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         public void onServiceConnected (ComponentName className, IBinder rawBinder)
@@ -443,8 +582,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         {
             String action = intent.getAction();
 
-            Log.i(TAG,"ACTION============" + action);
-
             final Intent mIntent = intent;
             //*********************//
             if (action.equals (UartService.ACTION_GATT_CONNECTED) )
@@ -474,7 +611,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     {
                         Log.d (TAG, "UART_DISCONNECT_MSG");
                         btnConnectDisconnect.setText ("Connect");
-                        btnSend.setEnabled (false);
+//                        btnSend.setEnabled (false);
                         selectFile.setEnabled(false);
                         ( (TextView) findViewById (R.id.deviceName) ).setText ("Not Connected");
                         String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
@@ -503,7 +640,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     {
                         try
                         {
-
                             String text = "";
 
                             if (rxValue[0]== 0x43) {
@@ -512,12 +648,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                 task = new TimerTask() {
                                     @Override
                                     public void run() {
-                                        // TODO Auto-generated method stub
+//                                         TODO Auto-generated method stub
                                         Message message = new Message();
                                         message.what = 1;
                                         handler.sendMessage(message);
                                     }
                                 };
+
 
                                 try {
 
@@ -546,7 +683,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         PackTotal.setText("总包数:" + binLenth / 128);
                                         pakenumber.setText("已发包:" + sendpackg);
 
-                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20s
+                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20
 
                                         Log.e(TAG, "onClick_readbinlen: " + length);
                                         Log.e(TAG, "onClick_packbinlen: " + binLenth);
@@ -592,7 +729,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 showMessage ("Device doesn't support UART. Disconnecting");
                 mService.disconnect();
             }
-
         }
     };
 
@@ -683,7 +819,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     public void onActivityResult (int requestCode, int resultCode, Intent data)
     {
 
-        Log.d(TAG,"返回的result_code=="+resultCode);
+        Log.d(TAG,"返回的result_code=="+requestCode);
         switch (requestCode)
         {
 
@@ -717,7 +853,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             break;
         case REQUEST_SELECT_FILE:
             if (resultCode == Activity.RESULT_OK && data != null){
-                Log.d(TAG,"此处表示返回的值为select_file"+data);
                 Uri uri = data.getData();
                 Log.d(TAG,"FILE URI=="+uri.toString());
                 // 得到path
@@ -731,9 +866,22 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 Log.d(TAG,"File Path"+path);
                 filePath = path;
                 pathName = path.substring(path.indexOf("G"));
-
                 ((TextView)findViewById(R.id.file_name)).setText(pathName);
-                btnSend.setEnabled(true);
+                if (pathName  == null || pathName.equals("")) {
+                    btnSend.setEnabled(false);
+                } else {
+                    btnSend.setEnabled(true);
+                }
+            }
+            break;
+        case REQUEST_CODE_SCAN:
+            if (resultCode == Activity.RESULT_OK){
+                if (data != null) {
+                    String content  = data.getStringExtra(DECODED_CONTENT_KEY);
+                    String request_data = replaceString(content.substring(content.indexOf("&m=") + 3));
+                    bt = newByte(hexStringToBytes(request_data));
+                    qrcode_data.setText(bytes2HexString(bt));
+                }
             }
             break;
         default:
@@ -756,6 +904,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     @Override
+
+    // 推出程序进入后台运行
     public void onBackPressed()
     {
         if (mState == UART_PROFILE_CONNECTED)

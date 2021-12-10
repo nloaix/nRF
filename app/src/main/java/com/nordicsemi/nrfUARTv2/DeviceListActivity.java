@@ -153,7 +153,6 @@ public class DeviceListActivity extends Activity
         ListView newDevicesListView = (ListView) findViewById (R.id.new_devices);
         newDevicesListView.setAdapter (deviceAdapter);
         newDevicesListView.setOnItemClickListener (mDeviceClickListener);
-
         scanLeDevice (true);
 
     }
@@ -161,6 +160,7 @@ public class DeviceListActivity extends Activity
     private void scanLeDevice (final boolean enable)
     {
         final Button cancelButton = (Button) findViewById (R.id.btn_cancel);
+        final TextView mEmptyList = (TextView) findViewById(R.id.empty);
         if (enable)
         {
             Log.i(TAG,"开始进行扫描");
@@ -174,6 +174,7 @@ public class DeviceListActivity extends Activity
 //                    mBluetoothAdapter.stopLeScan (mLeScanCallback);
                     bluetoothLeScanner.stopScan(scanCallback);
                     cancelButton.setText (R.string.scan);
+                    mEmptyList.setText(R.string.scan_complete);
                     Log.i(TAG,"devices的列表长度=="+ deviceAdapter.getCount());
                 }
             }, SCAN_PERIOD);
@@ -182,6 +183,8 @@ public class DeviceListActivity extends Activity
 //            mBluetoothAdapter.startLeScan (mLeScanCallback);
             bluetoothLeScanner.startScan(scanCallback);
             cancelButton.setText (R.string.cancel);
+            mEmptyList.setText(R.string.scanning);
+            deviceList.clear();
         }
         else
         {
@@ -189,6 +192,7 @@ public class DeviceListActivity extends Activity
 //            mBluetoothAdapter.stopLeScan (mLeScanCallback);
             bluetoothLeScanner.stopScan(scanCallback);
             cancelButton.setText (R.string.scan);
+            mEmptyList.setText(R.string.scan_complete);
         }
 
 //        mLvBtDevices = findViewById(R.id.new_devices);
@@ -325,8 +329,6 @@ public class DeviceListActivity extends Activity
         }
     };
 
-
-
     protected void onPause()
     {
         super.onPause();
@@ -384,13 +386,12 @@ public class DeviceListActivity extends Activity
             final TextView tvpaired = (TextView) vg.findViewById (R.id.paired);
             final TextView tvrssi = (TextView) vg.findViewById (R.id.rssi);
 
-            tvrssi.setVisibility (View.VISIBLE);
+//            tvrssi.setVisibility (View.VISIBLE);
 //            byte rssival = (byte) devRssiValues.get (device.getAddress() ).intValue();
 //            if (rssival != 0)
 //            {
 //                tvrssi.setText ("Rssi = " + String.valueOf (rssival) );
 //            }
-
             tvname.setText (device.getName() );
             tvadd.setText (device.getAddress() );
             if (device.getBondState() == BluetoothDevice.BOND_BONDED)
@@ -403,7 +404,6 @@ public class DeviceListActivity extends Activity
                 tvpaired.setText (R.string.paired);
                 tvrssi.setVisibility (View.VISIBLE);
                 tvrssi.setTextColor (Color.WHITE);
-
             }
             else
             {
@@ -424,8 +424,11 @@ public class DeviceListActivity extends Activity
                 }
             }
             if (canAdd){
-                devices.add(device);
-                notifyDataSetChanged();
+                if(device.getName() == null || device.getName().equals("")){  // 过滤掉name == null 的设备
+                }else {
+                    devices.add(device);
+                    notifyDataSetChanged();
+                }
             }
         }
     }
