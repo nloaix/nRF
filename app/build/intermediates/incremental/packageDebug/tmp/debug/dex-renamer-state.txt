@@ -1,4 +1,4 @@
-#Fri Dec 10 17:04:32 GMT+08:00 2021
+#Sat Dec 11 16:45:12 GMT+08:00 2021
 base.0=D\:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex

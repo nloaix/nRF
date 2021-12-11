@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URISyntaxException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Date;
@@ -208,7 +209,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private boolean packSendFlag = false;
 
     private int name;
-    private final Timer timer = new Timer();
+    private Timer timer;
     private TimerTask task;
     Handler handler = new Handler() {
         @Override
@@ -257,7 +258,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                             timer.cancel();
-//                            btnSend.setEnabled(false);
                         }
                     }
                 }
@@ -348,7 +348,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -406,6 +405,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             @Override
             public void onClick (View v)
             {
+                timer = new Timer();
                 String message = "升级命令";
                 byte[] value = {
 //                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x01, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf6,
@@ -581,7 +581,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         public void onReceive (Context context, Intent intent)
         {
             String action = intent.getAction();
-
+            Log.d(TAG,"当前的Action==" +action);
             final Intent mIntent = intent;
             //*********************//
             if (action.equals (UartService.ACTION_GATT_CONNECTED) )
@@ -634,6 +634,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             {
 
                 final byte[] rxValue = intent.getByteArrayExtra (UartService.EXTRA_DATA);
+                Log.d(TAG,"此处的rxvalue==" + bytes2HexString(rxValue));
                 runOnUiThread (new Runnable()
                 {
                     public void run()
@@ -654,7 +655,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         handler.sendMessage(message);
                                     }
                                 };
-
 
                                 try {
 
@@ -702,6 +702,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                      text = "PACK:OK "+String.valueOf(sendpackg);
                                 } else{
                                      text = "PACK:FAIL"+ String.valueOf(sendpackg);
+                                     // 此处是异常处理（没有收到04|06）时做的操作
                                 }
                             }
                             else {
