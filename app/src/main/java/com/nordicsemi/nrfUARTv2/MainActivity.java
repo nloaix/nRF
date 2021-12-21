@@ -254,10 +254,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             String message = "04";
                             byte [] blbuf = {0x04};
                             mService.writeRXCharacteristic (blbuf);
+                            Log.d(TAG,"OTA has complete,should disconntent devices");
+
                             String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] TX: " + message);
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                             timer.cancel();
+                            listAdapter.add ("[" + currentDateTimeString + "] 设备"+mDevice.getName()+"升级成功！！！");
+                            messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                         }
                     }
                 }
@@ -267,7 +271,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     System.arraycopy(send128Buffer, blepakgIndex * 20, blebuf, 0, 13);
                     mService.writeRXCharacteristic (blebuf);
                     blepakgIndex++;
-
                 }else{
                     System.arraycopy(send128Buffer, blepakgIndex*20, bleSendbuf, 0, 20);
                     mService.writeRXCharacteristic (bleSendbuf);
@@ -388,11 +391,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     }
                     else
                     {
-                        //Disconnect button pressed
+                        // Disconnect button pressed 点击进行设备断连
                         if (mDevice != null)
                         {
                             mService.disconnect();
-
                         }
                     }
                 }
@@ -428,7 +430,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 catch (Exception e)
                 {
                     // TODO Auto-generated catch block
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         });
@@ -445,7 +447,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         String regEx = "[:]";
         String rep = "";
         String newString =  str.replaceAll(regEx,rep);
-        Log.d(TAG,newString);
+//        Log.d(TAG,newString);
         return newString;
     }
 
@@ -462,7 +464,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             int pos = i * 2;
             d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
         }
-        Log.d(TAG,bytes2HexString(d));
+//        Log.d(TAG,bytes2HexString(d));
         return d;
     }
     private static byte charToByte(char c) {
@@ -477,6 +479,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     public static byte[] newByte (byte[] bt2) {
         System.arraycopy(bt2, 0, bt1, 3, 6);
         Log.d(TAG,bytes2HexString(bt1));
+
+        byte[] bt4 = { 0x00 };
+        System.arraycopy(bt4,0,bt1,9,1);
+
         byte[] bt3 = hexStringToBytes(makeChecksum(bytes2HexString(bt1)));  //拼接后直接在此方法中调用makeChecksum方法计算校验值
         System.arraycopy(bt3,0,bt1,9,1);    // 将计算的校验码得到替换掉最后一位
 //        Log.d(TAG,"拼接校验后的byte指令"+bytes2HexString(bt1));
@@ -501,8 +507,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             total += Integer.parseInt(s, 16);
             num = num + 2;
         }
-        Log.d(TAG,"校验码======"+hexInt((total & 0xff) << 8));
-        Log.d(TAG,"校验码======"+hexInt(total));
+//        Log.d(TAG,"校验码======"+hexInt((total & 0xff) << 8));
+//        Log.d(TAG,"校验码======"+hexInt(total));
         return hexInt((total & 0xff) << 8);
     }
 
@@ -524,14 +530,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         return hexa;
     }
 
-    // 返回调用权限值
+    // 返回调用相机CAMER权限值
     public void onRequestPermissionsResult(int requsetCode,String[] permissions,int[] grantResults) {
-        Log.d(TAG,"返回请求值=="+requsetCode);
         switch (requsetCode) {
             case 1:
 //                需要使用core3.3.0及以上的jar包版本 才能得到此回调
-                Log.d(TAG,"grantResult=====" + grantResults.length);
-                Log.d(TAG,"grantResult[0]=====" + grantResults[0]);
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goScan();
                 } else {
@@ -576,12 +579,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private final BroadcastReceiver UARTStatusChangeReceiver = new BroadcastReceiver()
     {
 
-
-
         public void onReceive (Context context, Intent intent)
         {
             String action = intent.getAction();
-            Log.d(TAG,"当前的Action==" +action);
+            Log.d(TAG,"ACTION==="+action);
             final Intent mIntent = intent;
             //*********************//
             if (action.equals (UartService.ACTION_GATT_CONNECTED) )
@@ -618,7 +619,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         listAdapter.add ("[" + currentDateTimeString + "] Disconnected to: " + mDevice.getName() );
                         mState = UART_PROFILE_DISCONNECTED;
                         mService.close();
-                        //setUiState();
                     }
                 });
             }
@@ -683,7 +683,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         PackTotal.setText("总包数:" + binLenth / 128);
                                         pakenumber.setText("已发包:" + sendpackg);
 
-                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20
+                                        timer.schedule(task, 1000, 110);  // 最少96全部传输完成 耗时2m20
 
                                         Log.e(TAG, "onClick_readbinlen: " + length);
                                         Log.e(TAG, "onClick_packbinlen: " + binLenth);
@@ -702,7 +702,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                      text = "PACK:OK "+String.valueOf(sendpackg);
                                 } else{
                                      text = "PACK:FAIL"+ String.valueOf(sendpackg);
-                                     // 此处是异常处理（没有收到04|06）时做的操作
+                                     // 此处是异常处理（没有收到04 || 06）时做的操作--->直接进行取消OTA
+                                    timer.cancel();
+                                    String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
+                                    listAdapter.add ("[" + currentDateTimeString + "] 升级异常，已退出升级，请重新升级");
+                                    messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                                 }
                             }
                             else {
@@ -710,10 +714,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             }
 
                             String veiwtext =  bytes2HexString(rxValue);
-                            Log.d(TAG,veiwtext);
+//                            Log.d(TAG,veiwtext);
                             String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                             listAdapter.add ("[" + currentDateTimeString + "] RX: " + veiwtext );
-
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
 
                         }
@@ -906,7 +909,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     @Override
 
-    // 推出程序进入后台运行
     public void onBackPressed()
     {
         if (mState == UART_PROFILE_CONNECTED)

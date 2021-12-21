@@ -82,7 +82,6 @@ public class DeviceListActivity extends Activity
     private ListView mLvBtDevices;
 
 
-
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
@@ -320,12 +319,10 @@ public class DeviceListActivity extends Activity
             bluetoothLeScanner.stopScan(scanCallback);
             Bundle b = new Bundle();
             b.putString (BluetoothDevice.EXTRA_DEVICE, deviceList.get (position).getAddress() );
-
             Intent result = new Intent();
             result.putExtras (b);
             setResult (Activity.RESULT_OK, result);
             finish();
-
         }
     };
 
