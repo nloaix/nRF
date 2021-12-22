@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="reference" name="coordinatorLayoutStyle"/>
+    <color name="black">#ff000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="notification_action_color_filter">#ffffffff</color>
+    <color name="notification_icon_bg_color">#ff9e9e9e</color>
+    <color name="notification_material_background_media_default_color">#ff424242</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="primary_text_default_material_dark">#ffffffff</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="ripple_material_light">#1f000000</color>
+    <color name="secondary_text_default_material_dark">#b3ffffff</color>
+    <color name="secondary_text_default_material_light">#8a000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <dimen name="compat_button_inset_horizontal_material">4dp</dimen>
+    <dimen name="compat_button_inset_vertical_material">6dp</dimen>
+    <dimen name="compat_button_padding_horizontal_material">8dp</dimen>
+    <dimen name="compat_button_padding_vertical_material">4dp</dimen>
+    <dimen name="compat_control_corner_material">2dp</dimen>
+    <dimen name="compat_notification_large_icon_max_height">320dp</dimen>
+    <dimen name="compat_notification_large_icon_max_width">320dp</dimen>
+    <dimen name="half_padding">4dip</dimen>
+    <dimen name="notification_action_icon_size">32dp</dimen>
+    <dimen name="notification_action_text_size">13sp</dimen>
+    <dimen name="notification_big_circle_margin">12dp</dimen>
+    <dimen name="notification_content_margin_start">8dp</dimen>
+    <dimen name="notification_large_icon_height">64dp</dimen>
+    <dimen name="notification_large_icon_width">64dp</dimen>
+    <dimen name="notification_main_column_padding_top">10dp</dimen>
+    <dimen name="notification_media_narrow_margin">@dimen/notification_content_margin_start</dimen>
+    <dimen name="notification_right_icon_size">16dp</dimen>
+    <dimen name="notification_right_side_padding_top">2dp</dimen>
+    <dimen name="notification_small_icon_background_padding">3dp</dimen>
+    <dimen name="notification_small_icon_size_as_large">24dp</dimen>
+    <dimen name="notification_subtext_size">13sp</dimen>
+    <dimen name="notification_top_pad">10dp</dimen>
+    <dimen name="notification_top_pad_large_text">5dp</dimen>
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="subtitle_corner_radius">2dp</dimen>
+    <dimen name="subtitle_outline_width">2dp</dimen>
+    <dimen name="subtitle_shadow_offset">2dp</dimen>
+    <dimen name="subtitle_shadow_radius">2dp</dimen>
+    <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
+    <drawable name="notification_template_icon_low_bg">#0cffffff</drawable>
+    <item name="decode" type="id"/>
+    <item name="decode_failed" type="id"/>
+    <item name="decode_succeeded" type="id"/>
+    <item name="launch_product_query" type="id"/>
+    <item name="line1" type="id"/>
+    <item name="line3" type="id"/>
+    <item name="quit" type="id"/>
+    <item name="restart_preview" type="id"/>
+    <item name="return_scan_result" type="id"/>
+    <item name="tag_transition_group" type="id"/>
+    <item name="tag_unhandled_key_event_manager" type="id"/>
+    <item name="tag_unhandled_key_listeners" type="id"/>
+    <item name="text" type="id"/>
+    <item name="text2" type="id"/>
+    <item name="title" type="id"/>
+    <integer name="cancel_button_image_alpha">127</integer>
+    <integer name="status_bar_notification_info_maxnum">999</integer>
+    <string name="BatteryLevel">    Battery Level</string>
+    <string name="FirmwareRevision">FirmwareRevision</string>
+    <string name="HardwareRevision">HardwareRevision</string>
+    <string name="ManufactureId">    ManufactureId</string>
+    <string name="ManufactureName">ManufactureName</string>
+    <string name="ModelNumber">ModelNumber</string>
+    <string name="Noupdate">    No Update</string>
+    <string name="OrgId">    OrganizationId</string>
+    <string name="RadioButton1">Alert level high</string>
+    <string name="RadioButton2">Alert level mid</string>
+    <string name="RadioButton3">Stop alerting</string>
+    <string name="ReadTxPower">ReadTxPower</string>
+    <string name="Readdummy">D Read</string>
+    <string name="RegCertDataList">RegCertDataList</string>
+    <string name="SerialNumber">SerialNumber</string>
+    <string name="SoftwareRevision">SoftwareRevision</string>
+    <string name="SystemId">SystemId</string>
+    <string name="Txpower">    Txpower Level</string>
+    <string name="app_name">BLE_Action</string>
+    <string name="app_picker_name">Applications</string>
+    <string name="ble_not_supported">Bluetooth Low Energy not supported</string>
+    <string name="bookmark_picker_name">Bookmarks</string>
+    <string name="button_add_calendar">Add to calendar</string>
+    <string name="button_add_contact">Add contact</string>
+    <string name="button_book_search">Book Search</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_custom_product_search">Custom search</string>
+    <string name="button_dial">Dial number</string>
+    <string name="button_email">Send email</string>
+    <string name="button_get_directions">Get directions</string>
+    <string name="button_mms">Send MMS</string>
+    <string name="button_ok">OK</string>
+    <string name="button_open_browser">Open browser</string>
+    <string name="button_product_search">Product search</string>
+    <string name="button_search_book_contents">Search contents</string>
+    <string name="button_share_app">Application</string>
+    <string name="button_share_bookmark">Bookmark</string>
+    <string name="button_share_by_email">Share via email</string>
+    <string name="button_share_by_sms">Share via SMS</string>
+    <string name="button_share_clipboard">Clipboard</string>
+    <string name="button_share_contact">Contact</string>
+    <string name="button_show_map">Show map</string>
+    <string name="button_sms">Send SMS</string>
+    <string name="button_web_search">Web search</string>
+    <string name="button_wifi">Connect to Network</string>
+    <string name="cancel">Cancel</string>
+    <string name="connect">connect</string>
+    <string name="connected">Connected</string>
+    <string name="contents_contact">Contact info</string>
+    <string name="contents_email">Email address</string>
+    <string name="contents_location">Geographic coordinates</string>
+    <string name="contents_phone">Phone number</string>
+    <string name="contents_sms">SMS address</string>
+    <string name="contents_text">Plain text</string>
+    <string name="device">Device:</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="disconnected">Not connected</string>
+    <string name="fileName">File Name</string>
+    <string name="high_alert">HIGH Alert triggered!</string>
+    <string name="history_clear_one_history_text">Clear</string>
+    <string name="history_clear_text">Clear history</string>
+    <string name="history_email_title">Barcode Scanner history</string>
+    <string name="history_empty">Empty</string>
+    <string name="history_empty_detail">No barcode scans have been recorded</string>
+    <string name="history_send">Send history</string>
+    <string name="history_title">History</string>
+    <string name="iasWrite">ImmediateAlert</string>
+    <string name="llsWrite">LinkLossAlert</string>
+    <string name="low_alert">LOW Alert triggered!</string>
+    <string name="menu_encode_mecard">Use MECARD</string>
+    <string name="menu_encode_vcard">Use vCard</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_history">History</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_share">Share</string>
+    <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
+    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
+    <string name="msg_default_format">Format</string>
+    <string name="msg_default_meta">Metadata</string>
+    <string name="msg_default_mms_subject">Hi</string>
+    <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
+    <string name="msg_default_time">Time</string>
+    <string name="msg_default_type">Type</string>
+    <string name="msg_encode_contents_failed">Could not encode a barcode from the data provided.</string>
+    <string name="msg_error">Error</string>
+    <string name="msg_google_books">Google</string>
+    <string name="msg_google_product">Google</string>
+    <string name="msg_intent_failed">Sorry, the requested application could not be launched. The barcode contents may be invalid.</string>
+    <string name="msg_invalid_value">Invalid value</string>
+    <string name="msg_redirect">Redirect</string>
+    <string name="msg_sbc_book_not_searchable">Sorry, this book is not searchable.</string>
+    <string name="msg_sbc_failed">Sorry, the search encountered a problem.</string>
+    <string name="msg_sbc_no_page_returned">No page returned</string>
+    <string name="msg_sbc_page">Page</string>
+    <string name="msg_sbc_results">Results</string>
+    <string name="msg_sbc_searching_book">Searching book\u2026</string>
+    <string name="msg_sbc_snippet_unavailable">Snippet not available</string>
+    <string name="msg_share_explanation">You can share data by displaying a barcode on your screen and scanning it with another phone.</string>
+    <string name="msg_share_text">Or type some text and press Enter</string>
+    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
+    <string name="no_ble_devices">No LE devices found.</string>
+    <string name="no_device">&lt;Select a device></string>
+    <string name="pair">pair</string>
+    <string name="paired">paired</string>
+    <string name="popup_message">Do you want to quit this Application?</string>
+    <string name="popup_no">NO</string>
+    <string name="popup_title">Quit nRF UART?</string>
+    <string name="popup_yes">YES</string>
+    <string name="preferences_actions_title">When a barcode is found\u2026</string>
+    <string name="preferences_auto_focus_title">Use auto focus</string>
+    <string name="preferences_auto_open_web_title">Open web pages automatically</string>
+    <string name="preferences_bulk_mode_summary">Scan and save many barcodes continuously</string>
+    <string name="preferences_bulk_mode_title">Bulk scan mode</string>
+    <string name="preferences_copy_to_clipboard_title">Copy to clipboard</string>
+    <string formatted="false" name="preferences_custom_product_search_summary">Substitutions: %s = contents, %f = format, %t = type</string>
+    <string name="preferences_custom_product_search_title">Custom search URL</string>
+    <string name="preferences_decode_1D_industrial_title">1D Industrial</string>
+    <string name="preferences_decode_1D_product_title">1D Product</string>
+    <string name="preferences_decode_Aztec_title">Aztec</string>
+    <string name="preferences_decode_Data_Matrix_title">Data Matrix</string>
+    <string name="preferences_decode_PDF417_title">PDF417 (β)</string>
+    <string name="preferences_decode_QR_title">QR Codes</string>
+    <string name="preferences_device_bug_workarounds_title">Device Bug Workarounds</string>
+    <string name="preferences_disable_barcode_scene_mode_title">No barcode scene mode</string>
+    <string name="preferences_disable_continuous_focus_summary">Use only standard focus mode</string>
+    <string name="preferences_disable_continuous_focus_title">No continuous focus</string>
+    <string name="preferences_disable_exposure_title">No exposure</string>
+    <string name="preferences_disable_metering_title">No metering</string>
+    <string name="preferences_front_light_auto">Automatic</string>
+    <string name="preferences_front_light_off">Off</string>
+    <string name="preferences_front_light_on">On</string>
+    <string name="preferences_front_light_summary">Improves scanning in low light on some phones, but may cause glare. Does not work on all phones.</string>
+    <string name="preferences_front_light_title">Use front light</string>
+    <string name="preferences_general_title">General settings</string>
+    <string name="preferences_invert_scan_summary">Scan for white barcodes on black background. Not available on some devices.</string>
+    <string name="preferences_invert_scan_title">Invert scan</string>
+    <string name="preferences_name">Settings</string>
+    <string name="preferences_orientation_title">No automatic rotation</string>
+    <string name="preferences_play_beep_title">Beep</string>
+    <string name="preferences_remember_duplicates_summary">Store multiple scans of the same barcode in History</string>
+    <string name="preferences_remember_duplicates_title">Remember duplicates</string>
+    <string name="preferences_result_title">Result settings</string>
+    <string name="preferences_scanning_title">When scanning for barcodes, decode\u2026</string>
+    <string name="preferences_search_country">Search country</string>
+    <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
+    <string name="preferences_supplemental_title">Retrieve more info</string>
+    <string name="preferences_vibrate_title">Vibrate</string>
+    <string name="qrcode">扫描二维码</string>
+    <string name="readRssi">Read Rssi Value</string>
+    <string name="ready">Ready</string>
+    <string name="removeBond">Remove Bond</string>
+    <string name="request_data">扫描结果</string>
+    <string name="result_address_book">Found contact info</string>
+    <string name="result_calendar">Found calendar event</string>
+    <string name="result_email_address">Found email address</string>
+    <string name="result_geo">Found geographic coordinates</string>
+    <string name="result_isbn">Found book</string>
+    <string name="result_product">Found product</string>
+    <string name="result_sms">Found SMS address</string>
+    <string name="result_tel">Found phone number</string>
+    <string name="result_text">Found plain text</string>
+    <string name="result_uri">Found URL</string>
+    <string name="result_wifi">Found WLAN Configuration</string>
+    <string name="sbc_name">Google Book Search</string>
+    <string name="scan">Scan</string>
+    <string name="scan_complete">Scan Complete</string>
+    <string name="scanning">Scanning for devices...</string>
+    <string name="select_device">Select a device</string>
+    <string name="status">Status</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="unpair">unpair</string>
+    <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
+    <string name="viewfinderview_status_text2">即可自动扫描</string>
+    <string name="wifi_changing_network">Requesting connection to network\u2026</string>
+    <string name="writeMAC">写入MAC地址</string>
+    <string name="writeTxnoti">TxNoti</string>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification" parent="@android:style/TextAppearance.StatusBar.EventContent"/>
+    <style name="TextAppearance.Compat.Notification.Info">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Info.Media"/>
+    <style name="TextAppearance.Compat.Notification.Line2" parent="TextAppearance.Compat.Notification.Info"/>
+    <style name="TextAppearance.Compat.Notification.Line2.Media" parent="TextAppearance.Compat.Notification.Info.Media"/>
+    <style name="TextAppearance.Compat.Notification.Media"/>
+    <style name="TextAppearance.Compat.Notification.Time">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Time.Media"/>
+    <style name="TextAppearance.Compat.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+    <style name="TextAppearance.Compat.Notification.Title.Media"/>
+    <style name="Widget.Compat.NotificationActionContainer" parent=""/>
+    <style name="Widget.Compat.NotificationActionText" parent=""/>
+    <style name="Widget.Support.CoordinatorLayout" parent="android:Widget">
+        <item name="statusBarBackground">#000000</item>
+    </style>
+    <declare-styleable name="ColorStateListItem">
+        <!-- Base color for this state. -->
+        <attr name="android:color"/>
+        <!-- Alpha multiplier applied to the base color. -->
+        <attr format="float" name="alpha"/>
+        <attr name="android:alpha"/>
+    </declare-styleable>
+    <declare-styleable name="CoordinatorLayout">
+        <!-- A reference to an array of integers representing the
+             locations of horizontal keylines in dp from the starting edge.
+             Child views can refer to these keylines for alignment using
+             layout_keyline="index" where index is a 0-based index into
+             this array. -->
+        <attr format="reference" name="keylines"/>
+        <!-- Drawable to display behind the status bar when the view is set to draw behind it. -->
+        <attr format="color|reference" name="statusBarBackground"/>
+    </declare-styleable>
+    <declare-styleable name="CoordinatorLayout_Layout">
+        <attr name="android:layout_gravity"/>
+        <!-- The class name of a Behavior class defining special runtime behavior
+             for this child view. -->
+        <attr format="string" name="layout_behavior"/>
+        <!-- The id of an anchor view that this view should position relative to. -->
+        <attr format="reference" name="layout_anchor"/>
+        <!-- The index of a keyline this view should position relative to.
+             android:layout_gravity will affect how the view aligns to the
+             specified keyline. -->
+        <attr format="integer" name="layout_keyline"/>
+
+        <!-- Specifies how an object should position relative to an anchor, on both the X and Y axes,
+             within its parent's bounds.  -->
+        <attr name="layout_anchorGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30"/>
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50"/>
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03"/>
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05"/>
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10"/>
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70"/>
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01"/>
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07"/>
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11"/>
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77"/>
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80"/>
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08"/>
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003"/>
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005"/>
+        </attr>
+
+        <!-- Specifies how this view insets the CoordinatorLayout and make some other views
+             dodge it. -->
+        <attr format="enum" name="layout_insetEdge">
+            <!-- Don't inset. -->
+            <enum name="none" value="0x0"/>
+            <!-- Inset the top edge. -->
+            <enum name="top" value="0x30"/>
+            <!-- Inset the bottom edge. -->
+            <enum name="bottom" value="0x50"/>
+            <!-- Inset the left edge. -->
+            <enum name="left" value="0x03"/>
+            <!-- Inset the right edge. -->
+            <enum name="right" value="0x05"/>
+            <!-- Inset the start edge. -->
+            <enum name="start" value="0x00800003"/>
+            <!-- Inset the end edge. -->
+            <enum name="end" value="0x00800005"/>
+        </attr>
+        <!-- Specifies how this view dodges the inset edges of the CoordinatorLayout. -->
+        <attr name="layout_dodgeInsetEdges">
+            <!-- Don't dodge any edges -->
+            <flag name="none" value="0x0"/>
+            <!-- Dodge the top inset edge. -->
+            <flag name="top" value="0x30"/>
+            <!-- Dodge the bottom inset edge. -->
+            <flag name="bottom" value="0x50"/>
+            <!-- Dodge the left inset edge. -->
+            <flag name="left" value="0x03"/>
+            <!-- Dodge the right inset edge. -->
+            <flag name="right" value="0x05"/>
+            <!-- Dodge the start inset edge. -->
+            <flag name="start" value="0x00800003"/>
+            <!-- Dodge the end inset edge. -->
+            <flag name="end" value="0x00800005"/>
+            <!-- Dodge all the inset edges. -->
+            <flag name="all" value="0x77"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="FontFamily">
+        <!-- The authority of the Font Provider to be used for the request. -->
+        <attr format="string" name="fontProviderAuthority"/>
+        <!-- The package for the Font Provider to be used for the request. This is used to verify
+        the identity of the provider. -->
+        <attr format="string" name="fontProviderPackage"/>
+        <!-- The query to be sent over to the provider. Refer to your font provider's documentation
+        on the format of this string. -->
+        <attr format="string" name="fontProviderQuery"/>
+        <!-- The sets of hashes for the certificates the provider should be signed with. This is
+        used to verify the identity of the provider, and is only required if the provider is not
+        part of the system image. This value may point to one list or a list of lists, where each
+        individual list represents one collection of signature hashes. Refer to your font provider's
+        documentation for these values. -->
+        <attr format="reference" name="fontProviderCerts"/>
+        <!-- The strategy to be used when fetching font data from a font provider in XML layouts.
+        This attribute is ignored when the resource is loaded from code, as it is equivalent to the
+        choice of API between {@link
+    androidx.core.content.res.ResourcesCompat#getFont(Context, int)} (blocking) and
+        {@link
+    androidx.core.content.res.ResourcesCompat#getFont(Context, int, FontCallback, Handler)}
+        (async). -->
+        <attr name="fontProviderFetchStrategy">
+            <!-- The blocking font fetch works as follows.
+              First, check the local cache, then if the requested font is not cached, request the
+              font from the provider and wait until it is finished.  You can change the length of
+              the timeout by modifying fontProviderFetchTimeout.  If the timeout happens, the
+              default typeface will be used instead. -->
+            <enum name="blocking" value="0"/>
+            <!-- The async font fetch works as follows.
+              First, check the local cache, then if the requeted font is not cached, trigger a
+              request the font and continue with layout inflation. Once the font fetch succeeds, the
+              target text view will be refreshed with the downloaded font data. The
+              fontProviderFetchTimeout will be ignored if async loading is specified. -->
+            <enum name="async" value="1"/>
+        </attr>
+        <!-- The length of the timeout during fetching. -->
+        <attr format="integer" name="fontProviderFetchTimeout">
+            <!-- A special value for the timeout. In this case, the blocking font fetching will not
+              timeout and wait until a reply is received from the font provider. -->
+            <enum name="forever" value="-1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="FontFamilyFont">
+        <!-- The style of the given font file. This will be used when the font is being loaded into
+         the font stack and will override any style information in the font's header tables. If
+         unspecified, the value in the font's header tables will be used. -->
+        <attr name="fontStyle">
+            <enum name="normal" value="0"/>
+            <enum name="italic" value="1"/>
+        </attr>
+        <!-- The reference to the font file to be used. This should be a file in the res/font folder
+         and should therefore have an R reference value. E.g. @font/myfont -->
+        <attr format="reference" name="font"/>
+        <!-- The weight of the given font file. This will be used when the font is being loaded into
+         the font stack and will override any weight information in the font's header tables. Must
+         be a positive number, a multiple of 100, and between 100 and 900, inclusive. The most
+         common values are 400 for regular weight and 700 for bold weight. If unspecified, the value
+         in the font's header tables will be used. -->
+        <attr format="integer" name="fontWeight"/>
+        <!-- The variation settings to be applied to the font. The string should be in the following
+         format: "'tag1' value1, 'tag2' value2, ...". If the default variation settings should be
+         used, or the font used does not support variation settings, this attribute needs not be
+         specified. -->
+        <attr format="string" name="fontVariationSettings"/>
+        <!-- The index of the font in the tcc font file. If the font file referenced is not in the
+        tcc format, this attribute needs not be specified. -->
+        <attr format="integer" name="ttcIndex"/>
+        <!-- References to the framework attrs -->
+        <attr name="android:fontStyle"/>
+        <attr name="android:font"/>
+        <attr name="android:fontWeight"/>
+        <attr name="android:fontVariationSettings"/>
+        <attr name="android:ttcIndex"/>
+    </declare-styleable>
+    <declare-styleable name="GradientColor">
+        <!-- Start color of the gradient. -->
+        <attr name="android:startColor"/>
+        <!-- Optional center color. -->
+        <attr name="android:centerColor"/>
+        <!-- End color of the gradient. -->
+        <attr name="android:endColor"/>
+        <!-- Type of gradient. The default type is linear. -->
+        <attr name="android:type"/>
+
+        <!-- Only applied to RadialGradient-->
+        <!-- Radius of the gradient, used only with radial gradient. -->
+        <attr name="android:gradientRadius"/>
+
+        <!-- Only applied to SweepGradient / RadialGradient-->
+        <!-- X coordinate of the center of the gradient within the path. -->
+        <attr name="android:centerX"/>
+        <!-- Y coordinate of the center of the gradient within the path. -->
+        <attr name="android:centerY"/>
+
+        <!-- LinearGradient specific -->
+        <!-- X coordinate of the start point origin of the gradient.
+             Defined in same coordinates as the path itself -->
+        <attr name="android:startX"/>
+        <!-- Y coordinate of the start point of the gradient within the shape.
+             Defined in same coordinates as the path itself -->
+        <attr name="android:startY"/>
+        <!-- X coordinate of the end point origin of the gradient.
+             Defined in same coordinates as the path itself -->
+        <attr name="android:endX"/>
+        <!-- Y coordinate of the end point of the gradient within the shape.
+             Defined in same coordinates as the path itself -->
+        <attr name="android:endY"/>
+
+        <!-- Defines the tile mode of the gradient. SweepGradient doesn't support tiling. -->
+        <attr name="android:tileMode"/>
+    </declare-styleable>
+    <declare-styleable name="GradientColorItem">
+        <!-- The offset (or ratio) of this current color item inside the gradient.
+             The value is only meaningful when it is between 0 and 1. -->
+        <attr name="android:offset"/>
+        <!-- The current color for the offset inside the gradient. -->
+        <attr name="android:color"/>
+    </declare-styleable>
+</resources>

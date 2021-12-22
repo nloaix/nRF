@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-fr\\values-fr.xml",
+            "map": [
+                {
+                    "source": "C:\\Program Files\\Java\\jdk1.8.0_301\\caches\\transforms-2\\files-2.1\\f14724208b5bfeeef0d6bdefe649bca7\\support-compat-28.0.0\\res\\values-fr\\values-fr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

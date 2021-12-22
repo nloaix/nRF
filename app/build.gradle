@@ -19,6 +19,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // 自定义apk文件名
+    android{
+    //修改生成的文件名
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                def fileName =  "BLE_Action.apk"
+                outputFileName = fileName
+            }
+        }
+    }
 }
 
 dependencies {
