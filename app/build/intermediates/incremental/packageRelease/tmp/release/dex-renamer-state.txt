@@ -1,4 +1,4 @@
-#Wed Dec 22 11:15:45 GMT+08:00 2021
+#Wed Jan 19 15:53:45 GMT+08:00 2022
 base.0=D\:\\xl\\AndroidProgram3\\nRFUART_GoogleAPI_Android4.3+\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

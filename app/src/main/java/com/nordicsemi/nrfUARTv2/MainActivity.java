@@ -67,6 +67,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Html;
 import android.text.LoginFilter;
 import android.util.Log;
 import android.view.Gravity;
@@ -97,6 +98,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private static final int REQUEST_SELECT_FILE = 11;   // 返回的文件Code
     private static final String DECODED_CONTENT_KEY = "codedContent";
     private static final int REQUEST_CODE_SCAN = 10;  // 扫描权限返回值
+    private static final int REQUEST_CODE_LOCATION = 101;
 
     TextView mRemoteRssiVal;
     RadioGroup mRg;
@@ -106,7 +108,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC;
+    private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC,banben;
     private TextView PackTotal,pakenumber,percentage,qrcode_data;
     private String filePath;
     private byte[] bt;
@@ -314,6 +316,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         writeMAC = (Button) findViewById(R.id.writeMAC);
         qrcode_data = (TextView) findViewById(R.id.qrcode_data);
         service_init();
+        requestLocationPerminssion();
 
         // 扫描二维码
         qrcode_scan.setOnClickListener(new View.OnClickListener() {
@@ -332,6 +335,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 }
             }
         });
+
+
 
         writeMAC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -442,6 +447,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         startActivityForResult(intent,REQUEST_CODE_SCAN);
     }
 
+    private void requestLocationPerminssion () {
+        boolean foreground = ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+            if (foreground) {
+            } else {
+                ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},2);
+            }
+    }
+
     // 去掉字符串中的：
     private static String replaceString(String str){
         String regEx = "[:]";
@@ -541,6 +554,15 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     Toast.makeText(this, "拒绝相机权限申请", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case 2 :
+                boolean foreground = false;
+                if (grantResults.length > 0 && grantResults[0] >= 0) {
+                    foreground = true;
+                    Toast.makeText(getApplicationContext(),"地理位置已被允许",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),"地理位置不被允许，将无法搜索到设备！！",Toast.LENGTH_SHORT).show();
+                    break;
+                }
             default:
                 break;
         }
@@ -861,7 +883,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 Log.d(TAG,"FILE URI=="+uri.toString());
                 // 得到path
                 String path = null;
-                String pathName = "";
+                String pathName = "";  //
                 try {
                     path = fileUtils.getPath(this,uri);
                 } catch (URISyntaxException e) {
@@ -869,7 +891,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 }
                 Log.d(TAG,"File Path"+path);
                 filePath = path;
-                pathName = path.substring(path.indexOf("G"));
+                Log.d(TAG,"当前的PATH==="+filePath);
+                pathName = path.substring(path.indexOf("de"));
+                Log.d(TAG,"当前的pathName==="+pathName);
                 ((TextView)findViewById(R.id.file_name)).setText(pathName);
                 if (pathName  == null || pathName.equals("")) {
                     btnSend.setEnabled(false);

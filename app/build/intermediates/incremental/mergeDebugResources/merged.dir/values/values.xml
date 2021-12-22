@@ -88,7 +88,7 @@
     <string name="SoftwareRevision">SoftwareRevision</string>
     <string name="SystemId">SystemId</string>
     <string name="Txpower">    Txpower Level</string>
-    <string name="app_name">BLE_Action</string>
+    <string name="app_name">众华OTA_V0.1.0</string>
     <string name="app_picker_name">Applications</string>
     <string name="ble_not_supported">Bluetooth Low Energy not supported</string>
     <string name="bookmark_picker_name">Bookmarks</string>

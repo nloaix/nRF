@@ -193,46 +193,7 @@ public class DeviceListActivity extends Activity
             cancelButton.setText (R.string.scan);
             mEmptyList.setText(R.string.scan_complete);
         }
-
-//        mLvBtDevices = findViewById(R.id.new_devices);
-//        deviceAdapter = new DeviceAdapter(this,this.deviceList);
-//        mLvBtDevices.setAdapter(deviceAdapter);
-//        mLvBtDevices.setOnItemClickListener( new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.i(TAG,"进入后期数据");
-//            }
-//        });
     }
-
-
-
-//    private BluetoothAdapter.LeScanCallback mLeScanCallback =
-//        new BluetoothAdapter.LeScanCallback()
-//    {
-//
-//        @Override
-//        public void onLeScan (final BluetoothDevice device, final int rssi, byte[] scanRecord)
-//        {
-//            runOnUiThread (new Runnable()
-//            {
-//                @Override
-//                public void run()
-//                {
-//
-//                    runOnUiThread (new Runnable()
-//                    {
-//                        @Override
-//                        public void run()
-//                        {
-//                            addDevice (device, rssi);
-//                        }
-//                    });
-//
-//                }
-//            });
-//        }
-//    };
 
     private ScanCallback scanCallback = new ScanCallback() {
         @Override
@@ -257,30 +218,6 @@ public class DeviceListActivity extends Activity
         }
     };
 
-
-
-//    private void addDevice (BluetoothDevice device, int rssi)
-//    {
-//        boolean deviceFound = false;
-//
-//for (BluetoothDevice listDev : deviceList)
-//        {
-//            if (listDev.getAddress().equals (device.getAddress() ) )
-//            {
-//                deviceFound = true;
-//                break;
-//            }
-//        }
-//
-//
-//        devRssiValues.put (device.getAddress(), rssi);
-//        if (!deviceFound)
-//        {
-//            deviceList.add (device);
-//            mEmptyList.setVisibility (View.GONE);
-//            deviceAdapter.notifyDataSetChanged();
-//        }
-//    }
 
     @Override
     public void onStart()
