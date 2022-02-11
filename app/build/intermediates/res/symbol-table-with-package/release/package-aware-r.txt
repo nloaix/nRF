@@ -376,6 +376,7 @@ string scanning
 string select_device
 string status
 string status_bar_notification_info_overflow
+string tab_name
 string unpair
 string viewfinderview_status_text1
 string viewfinderview_status_text2

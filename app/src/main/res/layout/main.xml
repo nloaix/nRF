@@ -135,7 +135,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/qrcode_scan"
                 android:text="@string/writeMAC"
-                android:textSize="17dp"/>
+                android:textSize="17dp" />
         </RelativeLayout>
     </LinearLayout>
 

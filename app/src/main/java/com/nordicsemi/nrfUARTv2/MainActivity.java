@@ -60,7 +60,9 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -108,7 +110,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private BluetoothAdapter mBtAdapter = null;
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
-    private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC,banben;
+    private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC;
     private TextView PackTotal,pakenumber,percentage,qrcode_data;
     private String filePath;
     private byte[] bt;
@@ -119,39 +121,39 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
      * @author yangle
      */
     private static final char crctable[] = { 0x0000, 0x1021, 0x2042, 0x3063,
-                                           0x4084, 0x50a5, 0x60c6, 0x70e7, 0x8108, 0x9129, 0xa14a, 0xb16b,
-                                           0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 0x1231, 0x0210, 0x3273, 0x2252,
-                                           0x52b5, 0x4294, 0x72f7, 0x62d6, 0x9339, 0x8318, 0xb37b, 0xa35a,
-                                           0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 0x2462, 0x3443, 0x0420, 0x1401,
-                                           0x64e6, 0x74c7, 0x44a4, 0x5485, 0xa56a, 0xb54b, 0x8528, 0x9509,
-                                           0xe5ee, 0xf5cf, 0xc5ac, 0xd58d, 0x3653, 0x2672, 0x1611, 0x0630,
-                                           0x76d7, 0x66f6, 0x5695, 0x46b4, 0xb75b, 0xa77a, 0x9719, 0x8738,
-                                           0xf7df, 0xe7fe, 0xd79d, 0xc7bc, 0x48c4, 0x58e5, 0x6886, 0x78a7,
-                                           0x0840, 0x1861, 0x2802, 0x3823, 0xc9cc, 0xd9ed, 0xe98e, 0xf9af,
-                                           0x8948, 0x9969, 0xa90a, 0xb92b, 0x5af5, 0x4ad4, 0x7ab7, 0x6a96,
-                                           0x1a71, 0x0a50, 0x3a33, 0x2a12, 0xdbfd, 0xcbdc, 0xfbbf, 0xeb9e,
-                                           0x9b79, 0x8b58, 0xbb3b, 0xab1a, 0x6ca6, 0x7c87, 0x4ce4, 0x5cc5,
-                                           0x2c22, 0x3c03, 0x0c60, 0x1c41, 0xedae, 0xfd8f, 0xcdec, 0xddcd,
-                                           0xad2a, 0xbd0b, 0x8d68, 0x9d49, 0x7e97, 0x6eb6, 0x5ed5, 0x4ef4,
-                                           0x3e13, 0x2e32, 0x1e51, 0x0e70, 0xff9f, 0xefbe, 0xdfdd, 0xcffc,
-                                           0xbf1b, 0xaf3a, 0x9f59, 0x8f78, 0x9188, 0x81a9, 0xb1ca, 0xa1eb,
-                                           0xd10c, 0xc12d, 0xf14e, 0xe16f, 0x1080, 0x00a1, 0x30c2, 0x20e3,
-                                           0x5004, 0x4025, 0x7046, 0x6067, 0x83b9, 0x9398, 0xa3fb, 0xb3da,
-                                           0xc33d, 0xd31c, 0xe37f, 0xf35e, 0x02b1, 0x1290, 0x22f3, 0x32d2,
-                                           0x4235, 0x5214, 0x6277, 0x7256, 0xb5ea, 0xa5cb, 0x95a8, 0x8589,
-                                           0xf56e, 0xe54f, 0xd52c, 0xc50d, 0x34e2, 0x24c3, 0x14a0, 0x0481,
-                                           0x7466, 0x6447, 0x5424, 0x4405, 0xa7db, 0xb7fa, 0x8799, 0x97b8,
-                                           0xe75f, 0xf77e, 0xc71d, 0xd73c, 0x26d3, 0x36f2, 0x0691, 0x16b0,
-                                           0x6657, 0x7676, 0x4615, 0x5634, 0xd94c, 0xc96d, 0xf90e, 0xe92f,
-                                           0x99c8, 0x89e9, 0xb98a, 0xa9ab, 0x5844, 0x4865, 0x7806, 0x6827,
-                                           0x18c0, 0x08e1, 0x3882, 0x28a3, 0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e,
-                                           0x8bf9, 0x9bd8, 0xabbb, 0xbb9a, 0x4a75, 0x5a54, 0x6a37, 0x7a16,
-                                           0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 0xfd2e, 0xed0f, 0xdd6c, 0xcd4d,
-                                           0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 0x7c26, 0x6c07, 0x5c64, 0x4c45,
-                                           0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 0xef1f, 0xff3e, 0xcf5d, 0xdf7c,
-                                           0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
-                                           0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
-                                           };
+            0x4084, 0x50a5, 0x60c6, 0x70e7, 0x8108, 0x9129, 0xa14a, 0xb16b,
+            0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 0x1231, 0x0210, 0x3273, 0x2252,
+            0x52b5, 0x4294, 0x72f7, 0x62d6, 0x9339, 0x8318, 0xb37b, 0xa35a,
+            0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 0x2462, 0x3443, 0x0420, 0x1401,
+            0x64e6, 0x74c7, 0x44a4, 0x5485, 0xa56a, 0xb54b, 0x8528, 0x9509,
+            0xe5ee, 0xf5cf, 0xc5ac, 0xd58d, 0x3653, 0x2672, 0x1611, 0x0630,
+            0x76d7, 0x66f6, 0x5695, 0x46b4, 0xb75b, 0xa77a, 0x9719, 0x8738,
+            0xf7df, 0xe7fe, 0xd79d, 0xc7bc, 0x48c4, 0x58e5, 0x6886, 0x78a7,
+            0x0840, 0x1861, 0x2802, 0x3823, 0xc9cc, 0xd9ed, 0xe98e, 0xf9af,
+            0x8948, 0x9969, 0xa90a, 0xb92b, 0x5af5, 0x4ad4, 0x7ab7, 0x6a96,
+            0x1a71, 0x0a50, 0x3a33, 0x2a12, 0xdbfd, 0xcbdc, 0xfbbf, 0xeb9e,
+            0x9b79, 0x8b58, 0xbb3b, 0xab1a, 0x6ca6, 0x7c87, 0x4ce4, 0x5cc5,
+            0x2c22, 0x3c03, 0x0c60, 0x1c41, 0xedae, 0xfd8f, 0xcdec, 0xddcd,
+            0xad2a, 0xbd0b, 0x8d68, 0x9d49, 0x7e97, 0x6eb6, 0x5ed5, 0x4ef4,
+            0x3e13, 0x2e32, 0x1e51, 0x0e70, 0xff9f, 0xefbe, 0xdfdd, 0xcffc,
+            0xbf1b, 0xaf3a, 0x9f59, 0x8f78, 0x9188, 0x81a9, 0xb1ca, 0xa1eb,
+            0xd10c, 0xc12d, 0xf14e, 0xe16f, 0x1080, 0x00a1, 0x30c2, 0x20e3,
+            0x5004, 0x4025, 0x7046, 0x6067, 0x83b9, 0x9398, 0xa3fb, 0xb3da,
+            0xc33d, 0xd31c, 0xe37f, 0xf35e, 0x02b1, 0x1290, 0x22f3, 0x32d2,
+            0x4235, 0x5214, 0x6277, 0x7256, 0xb5ea, 0xa5cb, 0x95a8, 0x8589,
+            0xf56e, 0xe54f, 0xd52c, 0xc50d, 0x34e2, 0x24c3, 0x14a0, 0x0481,
+            0x7466, 0x6447, 0x5424, 0x4405, 0xa7db, 0xb7fa, 0x8799, 0x97b8,
+            0xe75f, 0xf77e, 0xc71d, 0xd73c, 0x26d3, 0x36f2, 0x0691, 0x16b0,
+            0x6657, 0x7676, 0x4615, 0x5634, 0xd94c, 0xc96d, 0xf90e, 0xe92f,
+            0x99c8, 0x89e9, 0xb98a, 0xa9ab, 0x5844, 0x4865, 0x7806, 0x6827,
+            0x18c0, 0x08e1, 0x3882, 0x28a3, 0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e,
+            0x8bf9, 0x9bd8, 0xabbb, 0xbb9a, 0x4a75, 0x5a54, 0x6a37, 0x7a16,
+            0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 0xfd2e, 0xed0f, 0xdd6c, 0xcd4d,
+            0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 0x7c26, 0x6c07, 0x5c64, 0x4c45,
+            0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 0xef1f, 0xff3e, 0xcf5d, 0xdf7c,
+            0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
+            0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
+    };
 
     public static char calc (byte[] bytes)
     {
@@ -170,13 +172,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         try{
             FileInputStream fin = new FileInputStream(fileName);
 
-           int length = fin.available();
+            int length = fin.available();
 
-           byte [] buffer = new byte[length];
+            byte [] buffer = new byte[length];
 
             fin.read(buffer);
 
-           res = EncodingUtils.getString(buffer, "UTF-8");
+            res = EncodingUtils.getString(buffer, "UTF-8");
 
             fin.close();
         }
@@ -238,7 +240,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 if(blepakgIndex>6) {
                     blepakgIndex++;
                     if((blepakgIndex==40)||(packSendFlag==false)){
-                      //  if(blepakgIndex==40) {
+                        //  if(blepakgIndex==40) {
                         if(blepakgIndex<40) {
                             sendpackg++;
                         }
@@ -336,8 +338,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             }
         });
 
-
-
         writeMAC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -359,15 +359,16 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             }
         });
 
-
         // OnClick select a file
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");   // 选择任意类型
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(intent,REQUEST_SELECT_FILE);
+                if (isGrantExternalRW()) {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");   // 选择任意类型
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(intent,REQUEST_SELECT_FILE);
+                }
             }
         });
 
@@ -415,9 +416,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 timer = new Timer();
                 String message = "升级命令";
                 byte[] value = {
-//                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x01, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf6,
-//                        (byte) 0xFE, (byte) 0x01, (byte) 0x81, (byte) 0x85, 0x04, 0x02, (byte)0xFF, 0x01, (byte)0xFF, (byte) 0xf5
-                        (byte) 0xFE, 0x07,0x01, 0x00, 0x06
+                        (byte) 0xFE, 0x07,0x01, 0x00, 0x06,  // G36
+                        (byte) 0xFE, (byte) 0x0D ,0x01 ,0x00,(byte) 0xF2   // VMS
+
                 };
 
                 Log.e (TAG, "onClick: send like bool");
@@ -449,11 +450,22 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     private void requestLocationPerminssion () {
         boolean foreground = ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-            if (foreground) {
-            } else {
-                ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},2);
-            }
+        if (foreground) {
+        } else {
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        }
     }
+
+    // 调用存储权限
+    private boolean isGrantExternalRW() {
+        int storagePermission = ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (storagePermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},3);
+            return false;
+        }
+        return  true;
+    }
+
 
     // 去掉字符串中的：
     private static String replaceString(String str){
@@ -547,11 +559,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     public void onRequestPermissionsResult(int requsetCode,String[] permissions,int[] grantResults) {
         switch (requsetCode) {
             case 1:
+                Log.d(TAG,"Line 581 当前的grantResults[0]="+requsetCode);
 //                需要使用core3.3.0及以上的jar包版本 才能得到此回调
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goScan();
                 } else {
-                    Toast.makeText(this, "拒绝相机权限申请", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "拒绝相机权限申请！！！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2 :
@@ -560,9 +573,16 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     foreground = true;
                     Toast.makeText(getApplicationContext(),"地理位置已被允许",Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(),"地理位置不被允许，将无法搜索到设备！！",Toast.LENGTH_SHORT).show();
-                    break;
+                    Toast.makeText(getApplicationContext(),"地理位置不被允许，将无法搜索到设备！！！",Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case 3:
+                if (grantResults.length > 0 &&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this,"获得存储权限",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "拒绝访问存储，将无法选择文件！！！", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 break;
         }
@@ -705,7 +725,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         PackTotal.setText("总包数:" + binLenth / 128);
                                         pakenumber.setText("已发包:" + sendpackg);
 
-                                        timer.schedule(task, 1000, 110);  // 最少96全部传输完成 耗时2m20
+                                        timer.schedule(task, 1000, 104);  // 最少96全部传输完成 耗时2m20
 
                                         Log.e(TAG, "onClick_readbinlen: " + length);
                                         Log.e(TAG, "onClick_packbinlen: " + binLenth);
@@ -721,18 +741,19 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             if(packSendFlag==true){
                                 if(rxValue[0]==0x06 || rxValue[0] == 0x04){
                                     packSendFlag=false;
-                                     text = "PACK:OK "+String.valueOf(sendpackg);
+                                    text = "PACK:OK "+String.valueOf(sendpackg);
                                 } else{
-                                     text = "PACK:FAIL"+ String.valueOf(sendpackg);
-                                     // 此处是异常处理（没有收到04 || 06）时做的操作--->直接进行取消OTA
+                                    text = "PACK:FAIL"+ String.valueOf(sendpackg);
+                                    // 此处是异常处理（没有收到04 || 06）时做的操作--->直接进行取消OTA
                                     timer.cancel();
+                                    mService.disconnect();
                                     String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
                                     listAdapter.add ("[" + currentDateTimeString + "] 升级异常，已退出升级，请重新升级");
                                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                                 }
                             }
                             else {
-                                 text = new String(rxValue, "UTF-8");
+                                text = new String(rxValue, "UTF-8");
                             }
 
                             String veiwtext =  bytes2HexString(rxValue);
@@ -848,73 +869,71 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         Log.d(TAG,"返回的result_code=="+requestCode);
         switch (requestCode)
         {
+            case REQUEST_SELECT_DEVICE:
+                //When the DeviceListActivity return, with the selected device address
+                // 当DeviceListActivity返回时，带有选择的设备地址
+                if (resultCode == Activity.RESULT_OK && data != null)
+                {
+                    String deviceAddress = data.getStringExtra (BluetoothDevice.EXTRA_DEVICE);
+                    mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice (deviceAddress);
 
-        case REQUEST_SELECT_DEVICE:
-            //When the DeviceListActivity return, with the selected device address
-            // 当DeviceListActivity返回时，带有选择的设备地址
-            if (resultCode == Activity.RESULT_OK && data != null)
-            {
-                String deviceAddress = data.getStringExtra (BluetoothDevice.EXTRA_DEVICE);
-                mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice (deviceAddress);
+                    Log.d (TAG, "... onActivityResultdevice.address==" + mDevice + "mserviceValue" + mService);
+                    ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - connecting");
+                    mService.connect (deviceAddress);
 
-                Log.d (TAG, "... onActivityResultdevice.address==" + mDevice + "mserviceValue" + mService);
-                ( (TextView) findViewById (R.id.deviceName) ).setText (mDevice.getName() + " - connecting");
-                mService.connect (deviceAddress);
-            }
-            break;
-        case REQUEST_ENABLE_BT:
-            // When the request to enable Bluetooth returns
-            if (resultCode == Activity.RESULT_OK)
-            {
-                Toast.makeText (this, "Bluetooth has turned on ", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case REQUEST_ENABLE_BT:
+                // When the request to enable Bluetooth returns
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Toast.makeText (this, "Bluetooth has turned on ", Toast.LENGTH_SHORT).show();
 
-            }
-            else
-            {
-                // User did not enable Bluetooth or an error occurred
-                Log.d (TAG, "BT not enabled");
-                Toast.makeText (this, "Problem in BT Turning ON ", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            break;
-        case REQUEST_SELECT_FILE:
-            if (resultCode == Activity.RESULT_OK && data != null){
-                Uri uri = data.getData();
-                Log.d(TAG,"FILE URI=="+uri.toString());
-                // 得到path
-                String path = null;
-                String pathName = "";  //
-                try {
-                    path = fileUtils.getPath(this,uri);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
                 }
-                Log.d(TAG,"File Path"+path);
-                filePath = path;
-                Log.d(TAG,"当前的PATH==="+filePath);
-                pathName = path.substring(path.indexOf("de"));
-                Log.d(TAG,"当前的pathName==="+pathName);
-                ((TextView)findViewById(R.id.file_name)).setText(pathName);
-                if (pathName  == null || pathName.equals("")) {
-                    btnSend.setEnabled(false);
-                } else {
-                    btnSend.setEnabled(true);
+                else
+                {
+                    // User did not enable Bluetooth or an error occurred
+                    Log.d (TAG, "BT not enabled");
+                    Toast.makeText (this, "Problem in BT Turning ON ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-            }
-            break;
-        case REQUEST_CODE_SCAN:
-            if (resultCode == Activity.RESULT_OK){
-                if (data != null) {
-                    String content  = data.getStringExtra(DECODED_CONTENT_KEY);
-                    String request_data = replaceString(content.substring(content.indexOf("&m=") + 3));
-                    bt = newByte(hexStringToBytes(request_data));
-                    qrcode_data.setText(bytes2HexString(bt));
+                break;
+            case REQUEST_SELECT_FILE:
+                if (resultCode == Activity.RESULT_OK && data != null){
+                    Uri uri = data.getData();
+                    Log.d(TAG,"FILE URI=="+uri.toString());
+                    // 得到path及文件名
+                    String path = null;
+                    String pathName = "";
+                    try {
+                        path = fileUtils.getPath(this,uri);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    filePath = path;
+                    Log.d(TAG,"当前的PATH==="+filePath);
+                    pathName = path.substring(path.lastIndexOf("/")+1);     // 取最后一个/后的字符
+                    ((TextView)findViewById(R.id.file_name)).setText(pathName);
+                    if (pathName  == null || pathName.equals("")) {
+                        btnSend.setEnabled(false);
+                    } else {
+                        btnSend.setEnabled(true);
+                    }
                 }
-            }
-            break;
-        default:
-            Log.e (TAG, "wrong request code");
-            break;
+                break;
+            case REQUEST_CODE_SCAN:
+                if (resultCode == Activity.RESULT_OK){
+                    if (data != null) {
+                        String content  = data.getStringExtra(DECODED_CONTENT_KEY);
+                        String request_data = replaceString(content.substring(content.indexOf("&m=") + 3));
+                        bt = newByte(hexStringToBytes(request_data));
+                        qrcode_data.setText(bytes2HexString(bt));
+                    }
+                }
+                break;
+            default:
+                Log.e (TAG, "wrong request code");
+                break;
         }
         super.onActivityResult(requestCode,resultCode,data);
     }
@@ -946,19 +965,19 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         else
         {
             new AlertDialog.Builder (this)
-            .setIcon (android.R.drawable.ic_dialog_alert)
-            .setTitle (R.string.popup_title)
-            .setMessage (R.string.popup_message)
-            .setPositiveButton (R.string.popup_yes, new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick (DialogInterface dialog, int which)
-                {
-                    finish();
-                }
-            })
-            .setNegativeButton (R.string.popup_no, null)
-            .show();
+                    .setIcon (android.R.drawable.ic_dialog_alert)
+                    .setTitle (R.string.popup_title)
+                    .setMessage (R.string.popup_message)
+                    .setPositiveButton (R.string.popup_yes, new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick (DialogInterface dialog, int which)
+                        {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton (R.string.popup_no, null)
+                    .show();
         }
     }
 }

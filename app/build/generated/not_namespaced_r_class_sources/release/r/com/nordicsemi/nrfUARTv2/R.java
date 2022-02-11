@@ -562,12 +562,13 @@ public final class R {
     public static final int select_device=0x7f0900a8;
     public static final int status=0x7f0900a9;
     public static final int status_bar_notification_info_overflow=0x7f0900aa;
-    public static final int unpair=0x7f0900ab;
-    public static final int viewfinderview_status_text1=0x7f0900ac;
-    public static final int viewfinderview_status_text2=0x7f0900ad;
-    public static final int wifi_changing_network=0x7f0900ae;
-    public static final int writeMAC=0x7f0900af;
-    public static final int writeTxnoti=0x7f0900b0;
+    public static final int tab_name=0x7f0900ab;
+    public static final int unpair=0x7f0900ac;
+    public static final int viewfinderview_status_text1=0x7f0900ad;
+    public static final int viewfinderview_status_text2=0x7f0900ae;
+    public static final int wifi_changing_network=0x7f0900af;
+    public static final int writeMAC=0x7f0900b0;
+    public static final int writeTxnoti=0x7f0900b1;
   }
   public static final class style {
     public static final int AppBaseTheme=0x7f0a0000;
