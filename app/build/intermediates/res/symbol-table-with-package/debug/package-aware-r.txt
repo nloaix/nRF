@@ -165,7 +165,6 @@ id right
 id right_icon
 id right_side
 id rssi
-id rssival
 id select_file
 id sendButton2
 id start
@@ -179,6 +178,7 @@ id time
 id title
 id title_devices
 id top
+id versionName
 id viewfinder_view
 id writeMAC
 integer cancel_button_image_alpha
@@ -376,8 +376,8 @@ string scanning
 string select_device
 string status
 string status_bar_notification_info_overflow
-string tab_name
 string unpair
+string versionName
 string viewfinderview_status_text1
 string viewfinderview_status_text2
 string wifi_changing_network

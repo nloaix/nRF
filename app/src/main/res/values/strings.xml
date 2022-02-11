@@ -18,7 +18,6 @@
 
     <!--string name="app_name">nRF UART v2.0</string-->
     <string name="app_name">众华OTA</string>
-    <string name="tab_name">众华OTA_V0.1.0</string>
     <string name="device">Device:</string>
     <string name="no_device">&lt;Select a device&gt;</string>
     <string name="select_device">Select a device</string>
@@ -70,6 +69,7 @@
     <string name="qrcode">扫描二维码</string>
     <string name="writeMAC">写入MAC地址</string>
     <string name="request_data">扫描结果</string>
+    <string name="versionName">版本号：0.0</string>
 
 
     <string name="app_picker_name">Applications</string>

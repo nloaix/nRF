@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC;
-    private TextView PackTotal,pakenumber,percentage,qrcode_data;
+    private TextView PackTotal,pakenumber,percentage,qrcode_data,versionName;
     private String filePath;
     private byte[] bt;
 
@@ -319,6 +319,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         qrcode_data = (TextView) findViewById(R.id.qrcode_data);
         service_init();
         requestLocationPerminssion();
+        // 获取版本信息
+        try {
+            ((TextView) findViewById(R.id.versionName)).setText("版本号：" + getPackageManager().getPackageInfo(getPackageName(),0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         // 扫描二维码
         qrcode_scan.setOnClickListener(new View.OnClickListener() {
@@ -448,6 +454,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         startActivityForResult(intent,REQUEST_CODE_SCAN);
     }
 
+    // 调用权限
     private void requestLocationPerminssion () {
         boolean foreground = ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         if (foreground) {
@@ -456,7 +463,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     }
 
-    // 调用存储权限
     private boolean isGrantExternalRW() {
         int storagePermission = ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (storagePermission != PackageManager.PERMISSION_GRANTED) {
@@ -465,7 +471,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
         return  true;
     }
-
 
     // 去掉字符串中的：
     private static String replaceString(String str){
@@ -725,7 +730,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         PackTotal.setText("总包数:" + binLenth / 128);
                                         pakenumber.setText("已发包:" + sendpackg);
 
-                                        timer.schedule(task, 1000, 104);  // 最少96全部传输完成 耗时2m20
+                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20
 
                                         Log.e(TAG, "onClick_readbinlen: " + length);
                                         Log.e(TAG, "onClick_packbinlen: " + binLenth);
@@ -907,7 +912,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     String pathName = "";
                     try {
                         path = fileUtils.getPath(this,uri);
-                    } catch (URISyntaxException e) {
+                    }  catch (Exception e) {
                         e.printStackTrace();
                     }
                     filePath = path;

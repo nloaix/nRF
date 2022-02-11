@@ -83,7 +83,7 @@
 48-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:40:13-41
 49            android:configChanges="keyboardHidden|orientation|screenSize"
 49-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:43:13-74
-50            android:label="@string/tab_name"
+50            android:label="@string/app_name"
 50-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:41:13-45
 51            android:windowSoftInputMode="stateHidden" >
 51-->D:\xl\AndroidProgram3\nRFUART_GoogleAPI_Android4.3+\app\src\main\AndroidManifest.xml:42:13-54

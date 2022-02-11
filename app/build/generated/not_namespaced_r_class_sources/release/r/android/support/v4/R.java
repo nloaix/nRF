@@ -124,16 +124,16 @@ public final class R {
         public static final int right = 0x7f050043;
         public static final int right_icon = 0x7f050044;
         public static final int right_side = 0x7f050045;
-        public static final int start = 0x7f05004a;
-        public static final int status_bar_latest_event_content = 0x7f05004b;
-        public static final int tag_transition_group = 0x7f05004c;
-        public static final int tag_unhandled_key_event_manager = 0x7f05004d;
-        public static final int tag_unhandled_key_listeners = 0x7f05004e;
-        public static final int text = 0x7f05004f;
-        public static final int text2 = 0x7f050050;
-        public static final int time = 0x7f050051;
-        public static final int title = 0x7f050052;
-        public static final int top = 0x7f050054;
+        public static final int start = 0x7f050049;
+        public static final int status_bar_latest_event_content = 0x7f05004a;
+        public static final int tag_transition_group = 0x7f05004b;
+        public static final int tag_unhandled_key_event_manager = 0x7f05004c;
+        public static final int tag_unhandled_key_listeners = 0x7f05004d;
+        public static final int text = 0x7f05004e;
+        public static final int text2 = 0x7f05004f;
+        public static final int time = 0x7f050050;
+        public static final int title = 0x7f050051;
+        public static final int top = 0x7f050053;
     }
     public static final class integer {
         private integer() {}
