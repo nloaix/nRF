@@ -111,7 +111,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ListView messageListView;
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect, btnSend,selectFile,qrcode_scan,writeMAC;
-    private TextView PackTotal,pakenumber,percentage,qrcode_data,versionName;
+    private TextView PackTotal,pakenumber,percentage,qrcode_data;
     private String filePath;
     private byte[] bt;
 
@@ -205,9 +205,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         return builder.toString().toUpperCase();
     }
 
-    private byte [] binBuffer = new byte[30000];
+    private byte [] binBuffer = new byte[50000];
     private byte [] send128Buffer = new byte[133];
-    private int binLenth;
+    private int binLenth;   // 文件总字节
     private int sendpackg;
     private int blepakgIndex;
     private boolean packSendFlag = false;
@@ -225,7 +225,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     send128Buffer[0] = 0x01;
                     send128Buffer[1] = (byte)(sendpackg+1) ;
                     send128Buffer[2] = (byte)(~(sendpackg+1)) ;
-                    System.arraycopy(binBuffer, sendpackg*128, send128Buffer, 3, 128);
+                    System.arraycopy(binBuffer, sendpackg*128, send128Buffer, 3, 128);  // 将数据分成128并复制过去
                     byte [] buf = new byte[128];
                     System.arraycopy(binBuffer, sendpackg*128, buf, 0, 128);
                     char crcVuale = calc(buf);
@@ -235,7 +235,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                 byte [] bleSendbuf = new byte[20];
 
-                Log.e (TAG, "blepakgIndex="+blepakgIndex);
+                Log.d(TAG,"blepakgIndex=="+blepakgIndex);
 
                 if(blepakgIndex>6) {
                     blepakgIndex++;
@@ -266,6 +266,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             timer.cancel();
                             listAdapter.add ("[" + currentDateTimeString + "] 设备"+mDevice.getName()+"升级成功！！！");
                             messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
+                            btnConnectDisconnect.setEnabled(true);
                         }
                     }
                 }
@@ -419,6 +420,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             @Override
             public void onClick (View v)
             {
+                // 开始升级后将 disconnect 禁用
+                btnConnectDisconnect.setEnabled(false);
                 timer = new Timer();
                 String message = "升级命令";
                 byte[] value = {
@@ -717,7 +720,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         int length = fin.available();
                                         fin.read(binBuffer);
                                         binLenth = ((length / 128) * 128);
-                                        Log.d(TAG, "binLength==" + binLenth);
                                         if (length % 128 != 0x00) {
                                             binLenth += 128;
                                             for (int ii = length; ii < binLenth; ii++) {
@@ -730,10 +732,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                         PackTotal.setText("总包数:" + binLenth / 128);
                                         pakenumber.setText("已发包:" + sendpackg);
 
-                                        timer.schedule(task, 1000, 100);  // 最少96全部传输完成 耗时2m20
-
-                                        Log.e(TAG, "onClick_readbinlen: " + length);
-                                        Log.e(TAG, "onClick_packbinlen: " + binLenth);
+                                        timer.schedule(task, 1000, 105);  // 最少96全部传输完成 耗时2m20
 
                                         fin.close();
                                     }
@@ -747,17 +746,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                 if(rxValue[0]==0x06 || rxValue[0] == 0x04){
                                     packSendFlag=false;
                                     text = "PACK:OK "+String.valueOf(sendpackg);
-                                } else{
+                                } else if (rxValue[0] == 0x15) {
                                     text = "PACK:FAIL"+ String.valueOf(sendpackg);
-                                    // 此处是异常处理（没有收到04 || 06）时做的操作--->直接进行取消OTA
+                                    // 如果接受的信息为0x15--->重新传输一次刚刚的包
                                     timer.cancel();
                                     mService.disconnect();
+                                    btnConnectDisconnect.setEnabled(true);
                                     String currentDateTimeString = DateFormat.getTimeInstance().format (new Date() );
-                                    listAdapter.add ("[" + currentDateTimeString + "] 升级异常，已退出升级，请重新升级");
+                                    listAdapter.add ("[" + currentDateTimeString + "] "+ text);
                                     messageListView.smoothScrollToPosition (listAdapter.getCount() - 1);
                                 }
-                            }
-                            else {
+                            } else {
                                 text = new String(rxValue, "UTF-8");
                             }
 

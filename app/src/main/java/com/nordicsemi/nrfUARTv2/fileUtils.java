@@ -29,24 +29,6 @@ import java.nio.file.ClosedFileSystemException;
 
 public class fileUtils {
     private static final String TAG = "fileUtils";
-//    public static String getPath(Context context, Uri uri) throws URISyntaxException {
-//        if ("content".equalsIgnoreCase(uri.getScheme())) {
-//            String[] projection = {MediaStore.MediaColumns.DATA};
-//            Cursor cursor = null;
-//            try {
-//                cursor = context.getContentResolver().query(uri, projection, null, null, null);
-//                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-//                if (cursor.moveToFirst()) {
-//                    return cursor.getString(column_index);
-//                }
-//            } catch (Exception e) {
-//                Log.e(TAG, "getRealPathFromUri failed: " + e + ", contentUri=" + uri, e);
-//            }
-//        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-//            return uri.getPath();
-//        }
-//        return null;
-//    }
         /**
          * 根据Uri获取文件绝对路径，解决Android4.4以上版本Uri转换 兼容Android 10
          *
